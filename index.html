@@ -1,16 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh" content="0; url=zedlink.html">
-  <title>ZedLink — Zambia Connects Here</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZedLink — Zambia Connects Here</title>
+<style>
+:root{--green:#087f5b;--gold:#f5b82e;--ink:#17211d;--muted:#66736d;--bg:#f5f8f6}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--green);color:white;padding:22px 16px}.wrap{max-width:980px;margin:auto}
+.brand{font-size:28px;font-weight:800;letter-spacing:-1px}.brand span{color:var(--gold)}
+.tagline{margin-top:5px;opacity:.9;font-size:14px}main{padding:18px 16px 40px}
+.hero{background:white;border-radius:18px;padding:20px;box-shadow:0 3px 14px #10251a0c}
+h1{font-size:24px;margin:0 0 8px}p{color:var(--muted);line-height:1.5}
+.search{display:flex;gap:8px;margin:16px 0 18px}
+input,select{min-width:0;flex:1;padding:12px;border:1px solid #d9e3dd;border-radius:10px;font-size:15px;background:white}
+button{border:0;border-radius:10px;padding:12px 15px;background:var(--gold);color:#17211d;font-weight:700;font-size:14px;cursor:pointer}
+button:disabled{opacity:.6;cursor:not-allowed}.categories{display:flex;gap:8px;overflow:auto;padding:2px 0 15px}
+.categories button{white-space:nowrap;background:#e5f2ec;color:var(--green)}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:18px 0 12px}
+.section-title h2{margin:0;font-size:19px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px}
+.item{background:white;border-radius:14px;overflow:hidden;border:1px solid #e8eee9}
+.photo{height:110px;display:grid;place-items:center;background:#eaf3ee;font-size:44px}
+.details{padding:12px}.details h3{margin:0 0 6px;font-size:15px}
+.price{color:var(--green);font-weight:800;margin-bottom:6px}.location{font-size:12px;color:var(--muted)}
+.note,.status{font-size:12px;margin-top:16px}.status.success{color:var(--green)}.status.error{color:#b42318}
+.loading{color:var(--muted);font-size:14px;margin:10px 0}footer{text-align:center;padding:20px 16px;color:var(--muted);font-size:12px}
+@media(max-width:480px){.search{flex-direction:column}.search button{width:100%}}
+</style>
 </head>
 <body>
-  <p>Opening ZedLink…</p>
-  <p><a href="zedlink.html">Tap here if the website does not open automatically.</a></p>
-  <script>
-    window.location.replace("zedlink.html");
-  </script>
+<header><div class="wrap"><div class="brand">Zed<span>Link</span></div><div class="tagline">Zambia connects here.</div></div></header>
+<main class="wrap">
+<section class="hero">
+<h1>Buy, sell and discover in Zambia 🇿🇲</h1>
+<p>Find products and local businesses. Search listings or post a product.</p>
+<div class="search">
+<input id="search" type="search" placeholder="What are you looking for?" aria-label="Search listings">
+<select id="province" aria-label="Choose province">
+<option value="">All provinces</option><option>Central</option><option>Copperbelt</option><option>Eastern</option><option>Luapula</option><option>Lusaka</option><option>Muchinga</option><option>Northern</option><option>North-Western</option><option>Southern</option><option>Western</option>
+</select><button type="button" id="searchButton">Search</button>
+</div>
+<div class="categories"><button type="button" data-category="All">All</button><button type="button" data-category="Phones">Phones</button><button type="button" data-category="Fashion">Fashion</button><button type="button" data-category="Home">Home</button><button type="button" data-category="Vehicles">Vehicles</button><button type="button" data-category="Other">Other</button></div>
+</section>
+<section class="hero" style="margin-top:16px">
+<h2 style="margin:0 0 8px;font-size:20px">Post a product</h2><p>Submit a listing to save it online in Firebase Firestore.</p>
+<form id="postForm" style="display:grid;gap:10px">
+<input id="productName" required maxlength="60" placeholder="Product name (e.g. Bluetooth speaker)">
+<input id="productPrice" required type="number" min="1" step="1" placeholder="Price in Zambian Kwacha (K)">
+<select id="productCategory" required><option value="">Choose category</option><option>Phones</option><option>Fashion</option><option>Home</option><option>Vehicles</option><option>Other</option></select>
+<select id="productProvince" required><option value="">Choose province</option><option>Central</option><option>Copperbelt</option><option>Eastern</option><option>Luapula</option><option>Lusaka</option><option>Muchinga</option><option>Northern</option><option>North-Western</option><option>Southern</option><option>Western</option></select>
+<button type="submit" id="submitButton" style="background:#087f5b;color:white">Add listing</button>
+</form><p id="postMessage" class="status" aria-live="polite"></p>
+</section>
+<div class="section-title"><h2>Listings</h2><span id="listingCount" style="font-size:12px;color:#66736d">Loading…</span></div>
+<p id="loadingMessage" class="loading" aria-live="polite">Loading listings from Firestore…</p>
+<section class="grid" id="listings"></section>
+<p class="note">Please meet sellers safely and verify products before making payments. ZedLink does not process payments.</p>
+</main>
+<footer>© 2026 ZedLink • Built for Zambia</footer>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDR92dXWMcfi1yKfczTUvjr5i-hXp1Rvyw",
+  authDomain: "zedlink-zambia.firebaseapp.com",
+  projectId: "zedlink-zambia",
+  storageBucket: "zedlink-zambia.firebasestorage.app",
+  messagingSenderId: "573854183327",
+  appId: "1:573854183327:web:43e06b60e4d90dea3657aa"
+};
+const listingContainer=document.getElementById("listings");
+const loadingMessage=document.getElementById("loadingMessage");
+const listingCount=document.getElementById("listingCount");
+const postMessage=document.getElementById("postMessage");
+const submitButton=document.getElementById("submitButton");
+const searchInput=document.getElementById("search");
+const provinceInput=document.getElementById("province");
+let activeCategory="All",db=null;
+
+function filterItems(){
+ const term=searchInput.value.toLowerCase().trim(),province=provinceInput.value;
+ listingContainer.querySelectorAll(".item").forEach(item=>{
+  const matchesText=item.dataset.name.includes(term);
+  const matchesProvince=!province||item.dataset.province===province;
+  const matchesCategory=activeCategory==="All"||item.dataset.category===activeCategory;
+  item.style.display=matchesText&&matchesProvince&&matchesCategory?"":"none";
+ });
+}
+function createListingCard(data,id){
+ const card=document.createElement("article");card.className="item";card.dataset.id=id||"";
+ card.dataset.name=String(data.name||"").toLowerCase();card.dataset.category=String(data.category||"Other");card.dataset.province=String(data.province||"");
+ const photo=document.createElement("div");photo.className="photo";
+ photo.textContent=({Phones:"📱",Fashion:"👟",Home:"🛋️",Vehicles:"🚗",Other:"🛍️"})[data.category]||"🛍️";
+ const details=document.createElement("div");details.className="details";
+ const title=document.createElement("h3");title.textContent=data.name||"Untitled listing";
+ const price=document.createElement("div");price.className="price";price.textContent="K"+Number(data.price||0).toLocaleString();
+ const location=document.createElement("div");location.className="location";location.textContent=(data.province||"Province not specified")+" Province";
+ details.append(title,price,location);card.append(photo,details);return card;
+}
+function initializeFirebase(){
+ if(!firebaseConfig.apiKey||firebaseConfig.apiKey.startsWith("PASTE_")||!firebaseConfig.projectId||firebaseConfig.projectId.startsWith("PASTE_")){
+  loadingMessage.textContent="Firebase setup needed: replace the placeholder config values with your Firebase Web app configuration.";loadingMessage.classList.add("error");return;
+ }
+ try{
+  if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
+  db=firebase.firestore();
+  db.collection("listings").orderBy("createdAt","desc").onSnapshot(snapshot=>{
+   listingContainer.replaceChildren();
+   snapshot.forEach(doc=>listingContainer.appendChild(createListingCard(doc.data(),doc.id)));
+   listingCount.textContent=snapshot.size+" listings";
+   loadingMessage.textContent=snapshot.empty?"No listings yet. Be the first to post!":"";
+   filterItems();
+  },error=>{
+   console.error("Firestore loading error:",error);
+   loadingMessage.textContent="Could not load listings. Check your internet connection and Firestore rules.";
+   loadingMessage.classList.add("error");
+  });
+ }catch(error){
+  console.error("Firebase initialization error:",error);
+  loadingMessage.textContent="Firebase could not initialize. Check your configuration.";
+  loadingMessage.classList.add("error");
+ }
+}
+document.getElementById("postForm").addEventListener("submit",async function(event){
+ event.preventDefault();
+ const name=document.getElementById("productName").value.trim();
+ const price=Number(document.getElementById("productPrice").value);
+ const category=document.getElementById("productCategory").value;
+ const province=document.getElementById("productProvince").value;
+ if(!name||!Number.isFinite(price)||price<=0||!Number.isInteger(price)||!category||!province){
+  postMessage.textContent="Please enter valid product details.";postMessage.className="status error";return;
+ }
+ if(!db){postMessage.textContent="Firebase is not configured yet. Add your Firebase Web app configuration first.";postMessage.className="status error";return;}
+ postMessage.textContent="Saving your listing…";postMessage.className="status";
+ submitButton.disabled=true;submitButton.textContent="Saving…";
+ try{
+  await db.collection("listings").add({name,price,category,province,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+  document.getElementById("postForm").reset();
+  postMessage.textContent="Your listing has been saved successfully!";postMessage.className="status success";
+ }catch(error){
+  console.error("Error saving listing:",error);
+  postMessage.textContent="Could not save listing. Check your internet connection and Firebase rules.";postMessage.className="status error";
+ }finally{submitButton.disabled=false;submitButton.textContent="Add listing";}
+});
+document.getElementById("searchButton").addEventListener("click",filterItems);
+searchInput.addEventListener("input",filterItems);provinceInput.addEventListener("change",filterItems);
+document.querySelectorAll(".categories button").forEach(button=>button.addEventListener("click",()=>{
+ activeCategory=button.dataset.category;filterItems();
+}));
+initializeFirebase();
+</script>
 </body>
 </html>
