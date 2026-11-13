@@ -1,570 +1,512 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#087f5b">
+<meta name="description" content="Buy, sell and discover products across Zambia on ZedLink.">
 <title>ZedLink — Zambia Connects Here</title>
-
 <style>
-:root {
- --green:#087f5b;
- --gold:#f5b82e;
- --ink:#17211d;
- --muted:#66736d;
- --bg:#f5f8f6;
-}
-* {box-sizing:border-box}
-body {
- margin:0;
- font-family:Arial,sans-serif;
- background:var(--bg);
- color:var(--ink);
-}
-header {
- background:var(--green);
- color:white;
- padding:22px 16px;
-}
-.wrap {max-width:980px;margin:auto}
-.brand {font-size:28px;font-weight:800}
-.brand span {color:var(--gold)}
-.tagline {margin-top:5px;font-size:14px}
-main {padding:18px 16px 40px}
-.hero {
- background:white;
- border-radius:18px;
- padding:20px;
- margin-bottom:16px;
- box-shadow:0 3px 14px #10251a0c;
-}
-h1 {font-size:24px;margin:0 0 8px}
-p {color:var(--muted);line-height:1.5}
-input,select {
- width:100%;
- padding:12px;
- border:1px solid #d9e3dd;
- border-radius:10px;
- font-size:15px;
- background:white;
-}
-button {
- border:0;
- border-radius:10px;
- padding:12px 15px;
- background:var(--gold);
- color:var(--ink);
- font-weight:700;
- font-size:14px;
- cursor:pointer;
-}
-button:disabled {opacity:.6}
-button.green {background:var(--green);color:white}
-button.dark {background:#26352d;color:white}
-.form-grid {display:grid;gap:10px}
-.search {
- display:flex;
- gap:8px;
- margin:16px 0;
-}
-.categories {
- display:flex;
- gap:8px;
- overflow:auto;
- padding:5px 0 12px;
-}
-.categories button {
- white-space:nowrap;
- background:#e5f2ec;
- color:var(--green);
-}
-.categories button.active {
- background:var(--green);
- color:white;
-}
-.section-title {
- display:flex;
- justify-content:space-between;
- align-items:center;
- margin:18px 0 12px;
-}
-.section-title h2 {margin:0;font-size:19px}
-.grid {
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
- gap:12px;
-}
-.item {
- background:white;
- border-radius:14px;
- overflow:hidden;
- border:1px solid #e8eee9;
-}
-.photo {
- height:110px;
- display:grid;
- place-items:center;
- background:#eaf3ee;
- font-size:44px;
-}
-.details {padding:12px}
-.details h3 {margin:0 0 6px;font-size:15px}
-.price {color:var(--green);font-weight:800;margin-bottom:6px}
-.location {font-size:12px;color:var(--muted)}
-.status {font-size:13px;margin-top:12px}
-.success {color:var(--green)}
-.error {color:#b42318}
-.account-status {
- padding:12px;
- background:#e5f2ec;
- border-radius:10px;
- margin-bottom:12px;
- font-size:14px;
-}
-footer {
- text-align:center;
- padding:20px;
- color:var(--muted);
- font-size:12px;
-}
-@media(max-width:480px) {
- .search {flex-direction:column}
- .search button {width:100%}
-}
+:root{--green:#087f5b;--green-dark:#056348;--gold:#f5b82e;--ink:#17211d;--muted:#66736d;--bg:#f5f8f6;--line:#dfe8e2;--white:#fff}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--green);color:#fff;padding:20px 16px}
+.wrap{max-width:1000px;margin:auto}
+.brand{font-size:29px;font-weight:800;letter-spacing:-.5px}
+.brand span{color:var(--gold)}
+.tagline{margin-top:5px;font-size:14px}
+main{padding:18px 16px 40px}
+.hero{background:#fff;border-radius:18px;padding:20px;margin-bottom:16px;box-shadow:0 3px 14px #10251a0c}
+h1{font-size:24px;margin:0 0 8px}
+h2{font-size:21px;margin:0 0 8px}
+p{color:var(--muted);line-height:1.5}
+input,select,textarea{width:100%;padding:13px;border:1px solid var(--line);border-radius:11px;font-size:15px;background:#fff;color:var(--ink);font-family:inherit}
+textarea{min-height:90px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid #9bd5bd;border-color:var(--green)}
+button{border:0;border-radius:10px;padding:13px 15px;background:var(--gold);color:var(--ink);font-weight:700;font-size:14px;cursor:pointer}
+button:disabled{opacity:.6;cursor:not-allowed}
+button.green{background:var(--green);color:#fff}
+button.green:hover{background:var(--green-dark)}
+button.dark{background:#26352d;color:#fff}
+button.light{background:#e5f2ec;color:var(--green)}
+.form-grid{display:grid;gap:10px}
+.search{display:grid;grid-template-columns:1fr 180px auto;gap:8px;margin:16px 0}
+.categories{display:flex;gap:8px;overflow-x:auto;padding:5px 0 12px}
+.categories button{white-space:nowrap;background:#e5f2ec;color:var(--green);padding:10px 14px}
+.categories button.active{background:var(--green);color:#fff}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:20px 0 12px;gap:10px}
+.section-title h2{margin:0;font-size:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px}
+.item{background:#fff;border-radius:14px;overflow:hidden;border:1px solid #e8eee9;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.item:hover{transform:translateY(-2px);box-shadow:0 5px 16px #10251a12}
+.item:focus{outline:2px solid var(--green)}
+.photo{height:125px;display:grid;place-items:center;background:#eaf3ee;font-size:48px;overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:cover}
+.details{padding:12px}
+.details h3{margin:0 0 7px;font-size:15px;overflow-wrap:anywhere}
+.price{color:var(--green);font-weight:800;margin-bottom:6px}
+.location{font-size:12px;color:var(--muted)}
+.status{font-size:13px;margin-top:12px;overflow-wrap:anywhere}
+.success{color:var(--green)}
+.error{color:#b42318}
+.account-status{padding:12px;background:#e5f2ec;border-radius:10px;margin:12px 0;font-size:14px;overflow-wrap:anywhere}
+.auth-actions{display:flex;gap:8px;flex-wrap:wrap}
+.auth-actions button{flex:1}
+.hidden{display:none!important}
+.note{font-size:12px;color:var(--muted)}
+.empty{background:#fff;border:1px dashed var(--line);border-radius:14px;padding:20px;text-align:center;color:var(--muted)}
+.modal{display:none;position:fixed;inset:0;background:#0009;z-index:9999;padding:16px;align-items:center;justify-content:center;overflow-y:auto}
+.modal.open{display:flex}
+.modal-content{background:#fff;width:100%;max-width:460px;max-height:92vh;overflow-y:auto;padding:22px;border-radius:18px;box-shadow:0 10px 40px #0003}
+.modal-photo{height:190px;border-radius:12px;background:#eaf3ee;display:grid;place-items:center;font-size:60px;overflow:hidden;margin-bottom:15px}
+.modal-photo img{width:100%;height:100%;object-fit:contain}
+.modal-content h2{margin:0 0 8px;overflow-wrap:anywhere}
+.modal-price{font-size:22px;color:var(--green);font-weight:800;margin:8px 0}
+.modal-content button,.modal-content a{display:block;width:100%;margin-top:10px;text-align:center;text-decoration:none}
+footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
+@media(max-width:600px){.search{grid-template-columns:1fr}.search button{width:100%}.hero{padding:18px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.photo{height:105px}.auth-actions{flex-direction:column}.section-title h2{font-size:18px}}
 </style>
 </head>
-
 <body>
-
 <header>
-<div class="wrap">
- <div class="brand">Zed<span>Link</span></div>
- <div class="tagline">Zambia connects here.</div>
-</div>
+  <div class="wrap">
+    <div class="brand">Zed<span>Link</span></div>
+    <div class="tagline">Zambia connects here.</div>
+  </div>
 </header>
 
 <main class="wrap">
+  <section class="hero">
+    <h1>Buy, sell and discover in Zambia 🇿🇲</h1>
+    <p>Find products and local businesses across Zambia.</p>
+    <div class="search">
+      <input id="search" type="search" placeholder="What are you looking for?" aria-label="Search listings">
+      <select id="province" aria-label="Filter by province">
+        <option value="">All provinces</option>
+        <option>Central</option><option>Copperbelt</option><option>Eastern</option>
+        <option>Luapula</option><option>Lusaka</option><option>Muchinga</option>
+        <option>Northern</option><option>North-Western</option><option>Southern</option><option>Western</option>
+      </select>
+      <button id="searchButton" type="button">Search</button>
+    </div>
+    <div class="categories" aria-label="Product categories">
+      <button type="button" class="active" data-category="All">All</button>
+      <button type="button" data-category="Phones">Phones</button>
+      <button type="button" data-category="Fashion">Fashion</button>
+      <button type="button" data-category="Home">Home</button>
+      <button type="button" data-category="Vehicles">Vehicles</button>
+      <button type="button" data-category="Other">Other</button>
+    </div>
+  </section>
 
-<section class="hero">
-<h1>Buy, sell and discover in Zambia 🇿🇲</h1>
-<p>Find products and local businesses across Zambia.</p>
+  <section class="hero">
+    <h2>My ZedLink Account</h2>
+    <p>Create an account or sign in to start selling.</p>
+    <div id="accountStatus" class="account-status">Connecting to your account...</div>
+    <form id="authForm" class="form-grid">
+      <input id="email" type="email" autocomplete="email" required placeholder="Email address">
+      <input id="password" type="password" autocomplete="current-password" required minlength="6" placeholder="Password (at least 6 characters)">
+      <div class="auth-actions">
+        <button type="submit" class="green" id="authButton">Sign In</button>
+        <button type="button" id="registerButton">Create New Account</button>
+      </div>
+      <button type="button" class="dark" id="resetButton">Forgot Password?</button>
+    </form>
+    <button type="button" id="logoutButton" class="dark hidden">Sign Out</button>
+    <p id="authMessage" class="status" aria-live="polite"></p>
+  </section>
 
-<div class="search">
- <input id="search" type="search" placeholder="What are you looking for?">
- <select id="province">
-  <option value="">All provinces</option>
-  <option>Central</option>
-  <option>Copperbelt</option>
-  <option>Eastern</option>
-  <option>Luapula</option>
-  <option>Lusaka</option>
-  <option>Muchinga</option>
-  <option>Northern</option>
-  <option>North-Western</option>
-  <option>Southern</option>
-  <option>Western</option>
- </select>
- <button id="searchButton">Search</button>
-</div>
+  <section class="hero">
+    <h2>Post a Product</h2>
+    <p id="postIntro">Sign in to your account before posting a product.</p>
+    <form id="postForm" class="form-grid">
+      <input id="productName" required maxlength="60" placeholder="Product name">
+      <input id="productPrice" required type="number" min="1" step="1" placeholder="Price in Zambian Kwacha (K)">
+      <select id="productCategory" required>
+        <option value="">Choose category</option>
+        <option>Phones</option><option>Fashion</option><option>Home</option><option>Vehicles</option><option>Other</option>
+      </select>
+      <select id="productProvince" required>
+        <option value="">Choose province</option>
+        <option>Central</option><option>Copperbelt</option><option>Eastern</option><option>Luapula</option>
+        <option>Lusaka</option><option>Muchinga</option><option>Northern</option><option>North-Western</option>
+        <option>Southern</option><option>Western</option>
+      </select>
+      <textarea id="productDescription" maxlength="500" placeholder="Product description (condition, size, details, etc.)"></textarea>
+      <input id="sellerPhone" type="tel" inputmode="tel" placeholder="WhatsApp phone number (e.g. 0977123456)">
+      <input id="productImage" type="url" placeholder="Product image URL (optional, starts with https://)">
+      <p class="note">Your phone number and email may be shown to buyers so they can contact you. Only provide contact details you are comfortable sharing.</p>
+      <button type="submit" class="green" id="submitButton">Add Listing</button>
+    </form>
+    <p id="postMessage" class="status" aria-live="polite"></p>
+  </section>
 
-<div class="categories">
- <button class="active" data-category="All">All</button>
- <button data-category="Phones">Phones</button>
- <button data-category="Fashion">Fashion</button>
- <button data-category="Home">Home</button>
- <button data-category="Vehicles">Vehicles</button>
- <button data-category="Other">Other</button>
-</div>
-</section>
-
-<!-- USER ACCOUNT -->
-<section class="hero">
-<h2>My ZedLink Account</h2>
-<p>Create an account or sign in to start selling.</p>
-
-<div id="accountStatus" class="account-status">
-You are browsing as a visitor.
-</div>
-
-<form id="authForm" class="form-grid">
- <input id="email" type="email" required placeholder="Email address">
- <input id="password" type="password" required minlength="6" placeholder="Password (at least 6 characters)">
-
- <button type="submit" class="green" id="authButton">
-  Sign In
- </button>
-
- <button type="button" id="registerButton">
-  Create New Account
- </button>
-
- <button type="button" class="dark" id="resetButton">
-  Forgot Password?
- </button>
-</form>
-
-<button type="button" id="logoutButton" class="dark" style="display:none;margin-top:12px">
- Sign Out
-</button>
-
-<p id="authMessage" class="status" aria-live="polite"></p>
-</section>
-
-<!-- POST PRODUCT -->
-<section class="hero">
-<h2>Post a Product</h2>
-<p>Sign in to your account before posting a product.</p>
-
-<form id="postForm" class="form-grid">
- <input id="productName" required maxlength="60" placeholder="Product name">
-
- <input id="productPrice" required type="number" min="1" step="1" placeholder="Price in Zambian Kwacha (K)">
-
- <select id="productCategory" required>
-  <option value="">Choose category</option>
-  <option>Phones</option>
-  <option>Fashion</option>
-  <option>Home</option>
-  <option>Vehicles</option>
-  <option>Other</option>
- </select>
-
- <select id="productProvince" required>
-  <option value="">Choose province</option>
-  <option>Central</option>
-  <option>Copperbelt</option>
-  <option>Eastern</option>
-  <option>Luapula</option>
-  <option>Lusaka</option>
-  <option>Muchinga</option>
-  <option>Northern</option>
-  <option>North-Western</option>
-  <option>Southern</option>
-  <option>Western</option>
- </select>
-
- <button type="submit" class="green" id="submitButton">
-  Add Listing
- </button>
-</form>
-
-<p id="postMessage" class="status" aria-live="polite"></p>
-</section>
-
-<div class="section-title">
-<h2>Latest Listings</h2>
-<span id="listingCount">Loading...</span>
-</div>
-
-<p id="loadingMessage">Loading listings...</p>
-<section class="grid" id="listings"></section>
-
-<p>Please meet sellers safely and verify products before making payments. ZedLink does not process payments.</p>
-
+  <div class="section-title">
+    <h2>Latest Listings</h2>
+    <span id="listingCount">Loading...</span>
+  </div>
+  <p id="loadingMessage">Loading listings...</p>
+  <section class="grid" id="listings" aria-live="polite"></section>
+  <p>Please meet sellers safely and verify products before making payments. ZedLink does not process payments.</p>
 </main>
 
-<footer>
-© 2026 ZedLink • Built for Zambia 🇿🇲
-</footer>
+<div class="modal" id="productModal" role="dialog" aria-modal="true" aria-labelledby="modalName">
+  <div class="modal-content">
+    <div class="modal-photo" id="modalPhoto">🛍️</div>
+    <h2 id="modalName">Product details</h2>
+    <div class="modal-price" id="modalPrice"></div>
+    <p id="modalCategory"></p>
+    <p id="modalProvince"></p>
+    <p id="modalDescription"></p>
+    <p id="modalSeller"></p>
+    <a id="whatsappSeller" class="hidden" href="#" target="_blank" rel="noopener noreferrer"><button type="button" class="green">Contact Seller on WhatsApp</button></a>
+    <a id="emailSeller" class="hidden" href="#"><button type="button" class="light">Contact Seller by Email</button></a>
+    <button type="button" class="dark" id="closeModal">Close</button>
+  </div>
+</div>
+
+<footer>© 2026 ZedLink • Built for Zambia 🇿🇲</footer>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
 <script>
+"use strict";
 
+// Existing Firebase project configuration — keep this connected to zedlink-zambia.
 const firebaseConfig = {
- apiKey: "AIzaSyDR92dXWMcfi1yKfczTUvjr5i-hXp1Rvyw",
- authDomain: "zedlink-zambia.firebaseapp.com",
- projectId: "zedlink-zambia",
- storageBucket: "zedlink-zambia.firebasestorage.app",
- messagingSenderId: "573854183327",
- appId: "1:573854183327:web:43e06b60e4d90dea3657aa"
+  apiKey: "AIzaSyDR92dXWMcfi1yKfczTUvjr5i-hXp1Rvyw",
+  authDomain: "zedlink-zambia.firebaseapp.com",
+  projectId: "zedlink-zambia",
+  storageBucket: "zedlink-zambia.firebasestorage.app",
+  messagingSenderId: "573854183327",
+  appId: "1:573854183327:web:43e06b60e4d90dea3657aa"
 };
 
 let db = null;
 let auth = null;
 let activeCategory = "All";
 let isRegistering = false;
+let currentListings = [];
 
 const $ = id => document.getElementById(id);
 
-function message(id,text,type="status") {
- $(id).textContent = text;
- $(id).className = "status " + type;
+function setMessage(id, text, type = "") {
+  const element = $(id);
+  element.textContent = text;
+  element.className = "status" + (type ? " " + type : "");
 }
 
-// INITIALIZE FIREBASE
+function categoryIcon(category) {
+  const icons = {Phones:"📱", Fashion:"👟", Home:"🛋️", Vehicles:"🚗", Other:"🛍️"};
+  return icons[category] || "🛍️";
+}
+
 function initializeFirebase() {
- try {
-  if (!firebase.apps.length) {
-   firebase.initializeApp(firebaseConfig);
+  try {
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+    auth = firebase.auth();
+    watchAccount();
+    loadListings();
+  } catch (error) {
+    console.error("Firebase initialization error:", error);
+    $("loadingMessage").textContent = "Firebase could not start. Please check your internet connection and configuration.";
+    $("accountStatus").textContent = "Could not connect to Firebase.";
   }
-
-  db = firebase.firestore();
-  auth = firebase.auth();
-
-  loadListings();
-  watchAccount();
-
- } catch(error) {
-  console.error(error);
-  $("loadingMessage").textContent =
-   "Firebase initialization failed. Check your configuration.";
- }
 }
 
-// ACCOUNT STATUS
 function watchAccount() {
- auth.onAuthStateChanged(user => {
-
-  if(user) {
-   $("accountStatus").textContent =
-    "Signed in as: " + user.email;
-
-   $("logoutButton").style.display = "block";
-   $("authForm").style.display = "none";
-
-  } else {
-   $("accountStatus").textContent =
-    "You are browsing as a visitor. Sign in to post products.";
-
-   $("logoutButton").style.display = "none";
-   $("authForm").style.display = "grid";
-  }
- });
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      $("accountStatus").textContent = "Signed in as: " + (user.email || "your account");
+      $("postIntro").textContent = "You are signed in. Complete the form below to post a product.";
+      $("logoutButton").classList.remove("hidden");
+      $("authForm").classList.add("hidden");
+    } else {
+      $("accountStatus").textContent = "You are browsing as a visitor. Sign in to post products.";
+      $("postIntro").textContent = "Sign in to your account before posting a product.";
+      $("logoutButton").classList.add("hidden");
+      $("authForm").classList.remove("hidden");
+    }
+  });
 }
 
-// REGISTER AND SIGN IN
-$("authForm").addEventListener("submit",async event => {
- event.preventDefault();
+$("authForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!auth) return setMessage("authMessage", "Firebase is not connected.", "error");
 
- const email = $("email").value.trim();
- const password = $("password").value;
-
- try {
+  const email = $("email").value.trim();
+  const password = $("password").value;
   $("authButton").disabled = true;
-  $("authButton").textContent = "Please wait...";
+  $("authButton").textContent = isRegistering ? "Creating account..." : "Signing in...";
 
-  if(isRegistering) {
-   await auth.createUserWithEmailAndPassword(email,password);
-   message("authMessage","Account created successfully!","success");
-  } else {
-   await auth.signInWithEmailAndPassword(email,password);
-   message("authMessage","Welcome back! You are signed in.","success");
+  try {
+    if (isRegistering) {
+      await auth.createUserWithEmailAndPassword(email, password);
+      setMessage("authMessage", "Account created successfully. You are now signed in.", "success");
+    } else {
+      await auth.signInWithEmailAndPassword(email, password);
+      setMessage("authMessage", "Welcome back! You are signed in.", "success");
+    }
+    $("authForm").reset();
+    isRegistering = false;
+    $("registerButton").textContent = "Create New Account";
+    $("authButton").textContent = "Sign In";
+  } catch (error) {
+    console.error(error);
+    setMessage("authMessage", friendlyAuthError(error), "error");
+  } finally {
+    $("authButton").disabled = false;
+    if (!isRegistering) $("authButton").textContent = "Sign In";
   }
-
- } catch(error) {
-  message("authMessage",error.message,"error");
- } finally {
-  $("authButton").disabled = false;
-  $("authButton").textContent = "Sign In";
- }
 });
 
-// CREATE ACCOUNT BUTTON
-$("registerButton").addEventListener("click",() => {
- isRegistering = true;
- $("authButton").textContent = "Create Account";
- $("registerButton").style.display = "none";
- message("authMessage","Enter your email and password to register.");
+$("registerButton").addEventListener("click", () => {
+  isRegistering = !isRegistering;
+  $("authButton").textContent = isRegistering ? "Create Account" : "Sign In";
+  $("registerButton").textContent = isRegistering ? "Switch to Sign In" : "Create New Account";
+  $("password").setAttribute("autocomplete", isRegistering ? "new-password" : "current-password");
+  setMessage("authMessage", isRegistering ? "Enter your email and a password of at least 6 characters." : "Enter your details to sign in.");
 });
 
-// SIGN IN MODE
-$("authButton").addEventListener("click",() => {
- if(!isRegistering) return;
+function friendlyAuthError(error) {
+  const messages = {
+    "auth/email-already-in-use":"That email already has an account. Please sign in instead.",
+    "auth/invalid-email":"Please enter a valid email address.",
+    "auth/weak-password":"Choose a stronger password with at least 6 characters.",
+    "auth/user-not-found":"No account was found for that email. Check it or create an account.",
+    "auth/wrong-password":"Incorrect password. Please try again.",
+    "auth/invalid-credential":"Email or password is incorrect. Please check and try again.",
+    "auth/too-many-requests":"Too many attempts. Please wait a while and try again.",
+    "auth/network-request-failed":"Network problem. Check your internet connection."
+  };
+  return messages[error.code] || error.message || "Something went wrong. Please try again.";
+}
+
+$("resetButton").addEventListener("click", async () => {
+  if (!auth) return setMessage("authMessage", "Firebase is not connected.", "error");
+  const email = $("email").value.trim();
+  if (!email) return setMessage("authMessage", "Enter your email address first.", "error");
+  try {
+    await auth.sendPasswordResetEmail(email);
+    setMessage("authMessage", "Password reset email sent. Check your inbox.", "success");
+  } catch (error) {
+    setMessage("authMessage", friendlyAuthError(error), "error");
+  }
 });
 
-// PASSWORD RESET
-$("resetButton").addEventListener("click",async () => {
- const email = $("email").value.trim();
-
- if(!email) {
-  message("authMessage","Enter your email address first.","error");
-  return;
- }
-
- try {
-  await auth.sendPasswordResetEmail(email);
-  message("authMessage","Password reset email sent. Check your inbox.","success");
- } catch(error) {
-  message("authMessage",error.message,"error");
- }
+$("logoutButton").addEventListener("click", async () => {
+  try {
+    await auth.signOut();
+    setMessage("authMessage", "You have signed out.", "success");
+  } catch (error) {
+    setMessage("authMessage", error.message, "error");
+  }
 });
 
-// LOGOUT
-$("logoutButton").addEventListener("click",async () => {
- try {
-  await auth.signOut();
-  message("authMessage","You have signed out.","success");
- } catch(error) {
-  message("authMessage",error.message,"error");
- }
-});
-
-// LOAD LISTINGS
 function loadListings() {
+  db.collection("listings").orderBy("createdAt", "desc").onSnapshot(snapshot => {
+    currentListings = [];
+    snapshot.forEach(doc => currentListings.push({id:doc.id, ...doc.data()}));
+    renderListings();
+    $("listingCount").textContent = currentListings.length + (currentListings.length === 1 ? " listing" : " listings");
+    $("loadingMessage").textContent = currentListings.length ? "" : "No listings yet. Be the first to post!";
+  }, error => {
+    console.error("Firestore loading error:", error);
+    $("loadingMessage").textContent = "Could not load listings. Check your internet connection and Firestore rules.";
+  });
+}
 
- db.collection("listings")
- .orderBy("createdAt","desc")
- .onSnapshot(snapshot => {
+function renderListings() {
+  const container = $("listings");
+  container.replaceChildren();
+  const term = $("search").value.toLowerCase().trim();
+  const province = $("province").value;
 
-  $("listings").replaceChildren();
-
-  snapshot.forEach(doc => {
-   $("listings").appendChild(
-    createListingCard(doc.data())
-   );
+  const filtered = currentListings.filter(item => {
+    const searchable = [item.name, item.description, item.category, item.province].join(" ").toLowerCase();
+    const matchesText = searchable.includes(term);
+    const matchesProvince = !province || item.province === province;
+    const matchesCategory = activeCategory === "All" || item.category === activeCategory;
+    return matchesText && matchesProvince && matchesCategory;
   });
 
-  $("listingCount").textContent =
-   snapshot.size + " listings";
-
-  $("loadingMessage").textContent =
-   snapshot.empty ? "No listings yet. Be the first to post!" : "";
-
-  filterItems();
-
- },error => {
-  console.error(error);
-  $("loadingMessage").textContent =
-   "Could not load listings. Check Firestore rules.";
- });
+  filtered.forEach(item => container.appendChild(createListingCard(item)));
+  if (!filtered.length && currentListings.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "No products match your search. Try another word or filter.";
+    container.appendChild(empty);
+  }
 }
 
-// CREATE LISTING CARD
 function createListingCard(data) {
+  const card = document.createElement("article");
+  card.className = "item";
+  card.tabIndex = 0;
+  card.setAttribute("role", "button");
+  card.setAttribute("aria-label", "View " + (data.name || "product") + " details");
 
- const card = document.createElement("article");
- card.className = "item";
+  const photo = document.createElement("div");
+  photo.className = "photo";
+  if (isSafeImageUrl(data.imageUrl)) {
+    const img = document.createElement("img");
+    img.src = data.imageUrl;
+    img.alt = data.name || "Product photo";
+    img.loading = "lazy";
+    img.onerror = () => { photo.textContent = categoryIcon(data.category); };
+    photo.appendChild(img);
+  } else {
+    photo.textContent = categoryIcon(data.category);
+  }
 
- card.dataset.name = String(data.name || "").toLowerCase();
- card.dataset.category = data.category || "Other";
- card.dataset.province = data.province || "";
+  const details = document.createElement("div");
+  details.className = "details";
+  const title = document.createElement("h3");
+  title.textContent = data.name || "Untitled listing";
+  const price = document.createElement("div");
+  price.className = "price";
+  price.textContent = "K" + Number(data.price || 0).toLocaleString("en-ZM");
+  const location = document.createElement("div");
+  location.className = "location";
+  location.textContent = (data.province || "Unknown") + " Province";
+  details.append(title, price, location);
+  card.append(photo, details);
 
- const photo = document.createElement("div");
- photo.className = "photo";
-
- const icons = {
-  Phones:"📱",
-  Fashion:"👟",
-  Home:"🛋️",
-  Vehicles:"🚗",
-  Other:"🛍️"
- };
-
- photo.textContent = icons[data.category] || "🛍️";
-
- const details = document.createElement("div");
- details.className = "details";
-
- const title = document.createElement("h3");
- title.textContent = data.name || "Untitled listing";
-
- const price = document.createElement("div");
- price.className = "price";
- price.textContent = "K" + Number(data.price || 0).toLocaleString();
-
- const location = document.createElement("div");
- location.className = "location";
- location.textContent = (data.province || "Unknown") + " Province";
-
- details.append(title,price,location);
- card.append(photo,details);
-
- return card;
+  card.addEventListener("click", () => openProductDetails(data));
+  card.addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openProductDetails(data);
+    }
+  });
+  return card;
 }
 
-// FILTER LISTINGS
-function filterItems() {
-
- const term = $("search").value.toLowerCase().trim();
- const province = $("province").value;
-
- document.querySelectorAll(".item").forEach(item => {
-
-  const matchesText = item.dataset.name.includes(term);
-  const matchesProvince = !province || item.dataset.province === province;
-  const matchesCategory = activeCategory === "All" ||
-   item.dataset.category === activeCategory;
-
-  item.style.display =
-   matchesText && matchesProvince && matchesCategory ? "" : "none";
- });
+function isSafeImageUrl(value) {
+  if (!value) return false;
+  try { return new URL(value).protocol === "https:"; }
+  catch (_) { return false; }
 }
 
-// POST PRODUCT
-$("postForm").addEventListener("submit",async event => {
+function normalizeZambianPhone(phone) {
+  let digits = String(phone || "").replace(/\D/g, "");
+  if (digits.startsWith("00")) digits = digits.slice(2);
+  if (digits.startsWith("0") && digits.length === 10) digits = "26" + digits;
+  else if (digits.length === 9) digits = "260" + digits;
+  if (digits.startsWith("260") && digits.length === 12) return digits;
+  return "";
+}
 
- event.preventDefault();
+function openProductDetails(data) {
+  $("modalName").textContent = data.name || "Product details";
+  $("modalPrice").textContent = "K" + Number(data.price || 0).toLocaleString("en-ZM");
+  $("modalCategory").textContent = "Category: " + (data.category || "Other");
+  $("modalProvince").textContent = "Location: " + (data.province || "Not specified") + " Province";
+  $("modalDescription").textContent = data.description || "No description provided.";
+  $("modalSeller").textContent = "Seller: " + (data.sellerEmail || "Contact details not provided");
 
- const user = auth.currentUser;
+  const modalPhoto = $("modalPhoto");
+  modalPhoto.replaceChildren();
+  if (isSafeImageUrl(data.imageUrl)) {
+    const img = document.createElement("img");
+    img.src = data.imageUrl;
+    img.alt = data.name || "Product photo";
+    modalPhoto.appendChild(img);
+  } else {
+    modalPhoto.textContent = categoryIcon(data.category);
+  }
 
- if(!user) {
-  message("postMessage","Please sign in before posting a product.","error");
-  return;
- }
+  const whatsapp = $("whatsappSeller");
+  const phone = normalizeZambianPhone(data.sellerPhone);
+  if (phone) {
+    const text = "Hello, I saw your " + (data.name || "product") + " on ZedLink. Is it still available?";
+    whatsapp.href = "https://wa.me/" + phone + "?text=" + encodeURIComponent(text);
+    whatsapp.classList.remove("hidden");
+  } else {
+    whatsapp.classList.add("hidden");
+    whatsapp.href = "#";
+  }
 
- const name = $("productName").value.trim();
- const price = Number($("productPrice").value);
- const category = $("productCategory").value;
- const province = $("productProvince").value;
+  const emailLink = $("emailSeller");
+  if (data.sellerEmail) {
+    emailLink.href = "mailto:" + data.sellerEmail + "?subject=" + encodeURIComponent("Enquiry about " + (data.name || "your ZedLink listing"));
+    emailLink.classList.remove("hidden");
+  } else {
+    emailLink.classList.add("hidden");
+    emailLink.href = "#";
+  }
 
- if(!name || !Number.isInteger(price) || price <= 0 || !category || !province) {
-  message("postMessage","Please enter valid product details.","error");
-  return;
- }
+  $("productModal").classList.add("open");
+  $("closeModal").focus();
+}
 
- try {
+$("closeModal").addEventListener("click", () => $("productModal").classList.remove("open"));
+$("productModal").addEventListener("click", event => {
+  if (event.target === $("productModal")) $("productModal").classList.remove("open");
+});
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") $("productModal").classList.remove("open");
+});
+
+$("postForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!auth || !db) return setMessage("postMessage", "Firebase is not connected.", "error");
+  const user = auth.currentUser;
+  if (!user) return setMessage("postMessage", "Please sign in before posting a product.", "error");
+
+  const name = $("productName").value.trim();
+  const price = Number($("productPrice").value);
+  const category = $("productCategory").value;
+  const province = $("productProvince").value;
+  const description = $("productDescription").value.trim();
+  const sellerPhone = $("sellerPhone").value.trim();
+  const imageUrl = $("productImage").value.trim();
+
+  if (!name || !Number.isInteger(price) || price <= 0 || !category || !province) {
+    return setMessage("postMessage", "Please complete the product name, valid price, category and province.", "error");
+  }
+  if (imageUrl && !isSafeImageUrl(imageUrl)) {
+    return setMessage("postMessage", "The image link must be a valid HTTPS address.", "error");
+  }
+
   $("submitButton").disabled = true;
   $("submitButton").textContent = "Saving...";
-
-  await db.collection("listings").add({
-   name,
-   price,
-   category,
-   province,
-   sellerId:user.uid,
-   sellerEmail:user.email,
-   createdAt:firebase.firestore.FieldValue.serverTimestamp()
-  });
-
-  $("postForm").reset();
-  message("postMessage","Your listing has been saved successfully!","success");
-
- } catch(error) {
-  console.error(error);
-  message("postMessage","Could not save listing: " + error.message,"error");
-
- } finally {
-  $("submitButton").disabled = false;
-  $("submitButton").textContent = "Add Listing";
- }
+  try {
+    await db.collection("listings").add({
+      name, price, category, province, description,
+      sellerPhone,
+      imageUrl: imageUrl || "",
+      sellerId: user.uid,
+      sellerEmail: user.email || "",
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    $("postForm").reset();
+    setMessage("postMessage", "Your listing has been saved successfully!", "success");
+    window.scrollTo({top: $("listings").offsetTop, behavior: "smooth"});
+  } catch (error) {
+    console.error("Could not save listing:", error);
+    setMessage("postMessage", "Could not save listing: " + error.message, "error");
+  } finally {
+    $("submitButton").disabled = false;
+    $("submitButton").textContent = "Add Listing";
+  }
 });
 
-// SEARCH
-$("searchButton").addEventListener("click",filterItems);
-$("search").addEventListener("input",filterItems);
-$("province").addEventListener("change",filterItems);
+$("searchButton").addEventListener("click", renderListings);
+$("search").addEventListener("input", renderListings);
+$("province").addEventListener("change", renderListings);
 
-// CATEGORY BUTTONS
 document.querySelectorAll(".categories button").forEach(button => {
-
- button.addEventListener("click",() => {
-
-  activeCategory = button.dataset.category;
-
-  document.querySelectorAll(".categories button").forEach(btn => {
-   btn.classList.toggle("active",btn === button);
+  button.addEventListener("click", () => {
+    activeCategory = button.dataset.category;
+    document.querySelectorAll(".categories button").forEach(btn => btn.classList.toggle("active", btn === button));
+    renderListings();
   });
-
-  filterItems();
- });
 });
 
-// START
 initializeFirebase();
-
 </script>
 </body>
 </html>
