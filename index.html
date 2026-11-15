@@ -10,14 +10,9 @@
 
 <style>
 :root {
-  --green:#087f5b;
-  --dark:#056348;
-  --gold:#f5b82e;
-  --ink:#17211d;
-  --muted:#66736d;
-  --bg:#f5f8f6;
-  --line:#dfe8e2;
-  --white:#fff;
+  --green:#087f5b;--dark:#056348;--gold:#f5b82e;
+  --ink:#17211d;--muted:#66736d;--bg:#f5f8f6;
+  --line:#dfe8e2;--white:#fff;
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
@@ -68,6 +63,18 @@ button.light{background:#e5f2ec;color:var(--green)}
 .modal-photo img{width:100%;height:100%;object-fit:contain}
 .modal-price{font-size:22px;color:var(--green);font-weight:800;margin:8px 0}
 .modal-content button,.modal-content a{display:block;width:100%;margin-top:10px;text-align:center;text-decoration:none}
+
+/* Seller dashboard */
+.dashboard-list{display:grid;gap:12px;margin-top:15px}
+.dashboard-item{display:grid;grid-template-columns:90px 1fr;gap:12px;padding:12px;border:1px solid var(--line);border-radius:13px;background:#fff}
+.dashboard-photo{width:90px;height:90px;border-radius:10px;overflow:hidden;background:#eaf3ee;display:grid;place-items:center;font-size:32px}
+.dashboard-photo img{width:100%;height:100%;object-fit:cover}
+.dashboard-info{min-width:0}
+.dashboard-info h3{margin:0 0 6px;font-size:16px;overflow-wrap:anywhere}
+.dashboard-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.dashboard-actions button{padding:10px 13px}
+.dashboard-actions .delete-button{background:#fde8e7;color:#b42318}
+.dashboard-count{font-size:13px;color:var(--muted)}
 footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
 @media(max-width:600px){
  .search{grid-template-columns:1fr}
@@ -75,6 +82,8 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
  .photo{height:105px}
  .auth-actions{flex-direction:column}
+ .dashboard-item{grid-template-columns:75px 1fr}
+ .dashboard-photo{width:75px;height:75px}
 }
 </style>
 </head>
@@ -145,19 +154,14 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
 
  <form id="postForm" class="form-grid">
   <input id="productName" required maxlength="60" placeholder="Product name">
-
   <input id="productPrice" required type="number" min="1" step="1" placeholder="Price in Zambian Kwacha (K)">
 
   <select id="productCategory" required>
    <option value="">Choose category</option>
-   <option>Phones</option>
-   <option>Electronics</option>
-   <option>Fashion</option>
-   <option>Home</option>
-   <option>Furniture</option>
-   <option>Vehicles</option>
-   <option>Property</option>
-   <option>Agriculture</option>
+   <option>Phones</option><option>Electronics</option>
+   <option>Fashion</option><option>Home</option>
+   <option>Furniture</option><option>Vehicles</option>
+   <option>Property</option><option>Agriculture</option>
    <option>Other</option>
   </select>
 
@@ -171,18 +175,25 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
   </select>
 
   <textarea id="productDescription" maxlength="500" placeholder="Product description"></textarea>
-
   <input id="sellerPhone" type="tel" inputmode="tel" placeholder="WhatsApp number e.g. 0977123456">
 
   <label for="productImage">Product Photo (optional)</label>
   <input id="productImage" type="file" accept="image/jpeg,image/png,image/webp">
   <p class="note">Choose a JPG, PNG or WebP photo. Maximum size: 5MB.</p>
-
   <p class="note">Your contact details may be shown to buyers. Only provide details you are comfortable sharing.</p>
 
   <button type="submit" class="green" id="submitButton">Add Listing</button>
  </form>
  <p id="postMessage" class="status"></p>
+</section>
+
+<!-- SELLER DASHBOARD -->
+<section class="hero" id="sellerDashboard">
+ <h2>My Seller Dashboard</h2>
+ <p>View, edit and delete products you have posted.</p>
+ <div id="dashboardStatus" class="account-status">Sign in to manage your products.</div>
+ <div id="dashboardCount" class="dashboard-count"></div>
+ <div id="myListings" class="dashboard-list"></div>
 </section>
 
 <div class="section-title">
@@ -236,7 +247,6 @@ const firebaseConfig = {
  appId: "1:573854183327:web:43e06b60e4d90dea3657aa"
 };
 
-// Cloudinary settings
 const CLOUDINARY_CLOUD_NAME = "wwiiwwad";
 const CLOUDINARY_UPLOAD_PRESET = "zedlink_upload";
 
@@ -256,15 +266,9 @@ function setMessage(id,text,type=""){
 
 function categoryIcon(category){
  const icons={
-  Phones:"📱",
-  Electronics:"💻",
-  Fashion:"👟",
-  Home:"🏠",
-  Furniture:"🪑",
-  Vehicles:"🚗",
-  Property:"🏡",
-  Agriculture:"🌽",
-  Other:"🛍️"
+  Phones:"📱",Electronics:"💻",Fashion:"👟",Home:"🏠",
+  Furniture:"🪑",Vehicles:"🚗",Property:"🏡",
+  Agriculture:"🌽",Other:"🛍️"
  };
  return icons[category]||"🛍️";
 }
@@ -296,6 +300,7 @@ function watchAccount(){
    $("logoutButton").classList.add("hidden");
    $("authForm").classList.remove("hidden");
   }
+  renderSellerDashboard();
  });
 }
 
@@ -369,16 +374,13 @@ $("logoutButton").addEventListener("click",async()=>{
  }
 });
 
-// Upload selected product photo to Cloudinary
 async function uploadProductImage(file){
  if(!file)return "";
 
  const allowedTypes=["image/jpeg","image/png","image/webp"];
-
  if(!allowedTypes.includes(file.type)){
   throw new Error("Please choose a JPG, PNG or WebP image.");
  }
-
  if(file.size>5*1024*1024){
   throw new Error("Your photo is too large. Maximum size is 5MB.");
  }
@@ -390,29 +392,17 @@ async function uploadProductImage(file){
  formData.append("file",file);
  formData.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);
 
- const response=await fetch(uploadUrl,{
-  method:"POST",
-  body:formData
- });
+ const response=await fetch(uploadUrl,{method:"POST",body:formData});
 
  let result;
- try{
-  result=await response.json();
- }catch(error){
-  throw new Error("Cloudinary returned an invalid response.");
- }
+ try{result=await response.json();}
+ catch(error){throw new Error("Cloudinary returned an invalid response.");}
 
  if(!response.ok){
   console.error("Cloudinary upload error:",result);
-  throw new Error(
-   result.error?.message||"Photo upload failed. Please try again."
-  );
+  throw new Error(result.error?.message||"Photo upload failed. Please try again.");
  }
-
- if(!result.secure_url){
-  throw new Error("Cloudinary did not return a secure photo link.");
- }
-
+ if(!result.secure_url)throw new Error("Cloudinary did not return a secure photo link.");
  return result.secure_url;
 }
 
@@ -421,11 +411,13 @@ function loadListings(){
   currentListings=[];
   snapshot.forEach(doc=>currentListings.push({id:doc.id,...doc.data()}));
   renderListings();
+  renderSellerDashboard();
   $("listingCount").textContent=currentListings.length+" listings";
   $("loadingMessage").textContent=currentListings.length?"":"No listings yet. Be the first to post!";
  },error=>{
   console.error(error);
   $("loadingMessage").textContent="Could not load listings. Check Firestore rules.";
+  $("dashboardStatus").textContent="Could not load your products. Please check your connection.";
  });
 }
 
@@ -562,7 +554,7 @@ document.addEventListener("keydown",event=>{
  if(event.key==="Escape")$("productModal").classList.remove("open");
 });
 
-// Submit product and upload its photo first if one was selected
+// POST A PRODUCT
 $("postForm").addEventListener("submit",async event=>{
  event.preventDefault();
 
@@ -583,21 +575,10 @@ $("postForm").addEventListener("submit",async event=>{
   return setMessage("postMessage","Complete the product name, price, category and province.","error");
  }
 
- if(imageFile){
-  const allowedTypes=["image/jpeg","image/png","image/webp"];
-  if(!allowedTypes.includes(imageFile.type)){
-   return setMessage("postMessage","Please choose a JPG, PNG or WebP photo.","error");
-  }
-  if(imageFile.size>5*1024*1024){
-   return setMessage("postMessage","Your photo is too large. Maximum size is 5MB.","error");
-  }
- }
-
  $("submitButton").disabled=true;
 
  try{
   let imageUrl="";
-
   if(imageFile){
    $("submitButton").textContent="Uploading photo...";
    setMessage("postMessage","Uploading your product photo. Please wait...");
@@ -608,12 +589,7 @@ $("postForm").addEventListener("submit",async event=>{
   setMessage("postMessage","Saving your product listing...");
 
   await db.collection("listings").add({
-   name,
-   price,
-   category,
-   province,
-   description,
-   sellerPhone,
+   name,price,category,province,description,sellerPhone,
    imageUrl:imageUrl||"",
    sellerId:user.uid,
    sellerEmail:user.email||"",
@@ -622,7 +598,7 @@ $("postForm").addEventListener("submit",async event=>{
 
   $("postForm").reset();
   setMessage("postMessage","Your listing and photo have been saved successfully!","success");
-  window.scrollTo({top:$("listings").offsetTop,behavior:"smooth"});
+  window.scrollTo({top:$("sellerDashboard").offsetTop,behavior:"smooth"});
 
  }catch(error){
   console.error("Could not post listing:",error);
@@ -632,6 +608,163 @@ $("postForm").addEventListener("submit",async event=>{
   $("submitButton").textContent="Add Listing";
  }
 });
+
+// SELLER DASHBOARD
+function renderSellerDashboard(){
+ const container=$("myListings");
+ container.replaceChildren();
+
+ const user=auth&&auth.currentUser;
+
+ if(!user){
+  $("dashboardStatus").textContent="Sign in to view and manage your products.";
+  $("dashboardCount").textContent="";
+  return;
+ }
+
+ const mine=currentListings.filter(item=>item.sellerId===user.uid);
+
+ $("dashboardStatus").textContent="You are signed in. These are your product listings.";
+ $("dashboardCount").textContent=mine.length+" of your products";
+
+ if(!mine.length){
+  const empty=document.createElement("div");
+  empty.className="empty";
+  empty.textContent="You have not posted any products yet. Use the Post a Product form above to get started.";
+  container.appendChild(empty);
+  return;
+ }
+
+ mine.forEach(item=>{
+  const card=document.createElement("div");
+  card.className="dashboard-item";
+
+  const photo=document.createElement("div");
+  photo.className="dashboard-photo";
+
+  if(isSafeImageUrl(item.imageUrl)){
+   const img=document.createElement("img");
+   img.src=item.imageUrl;
+   img.alt=item.name||"Product photo";
+   img.loading="lazy";
+   img.onerror=()=>{photo.textContent=categoryIcon(item.category);};
+   photo.appendChild(img);
+  }else{
+   photo.textContent=categoryIcon(item.category);
+  }
+
+  const info=document.createElement("div");
+  info.className="dashboard-info";
+
+  const title=document.createElement("h3");
+  title.textContent=item.name||"Untitled listing";
+
+  const price=document.createElement("div");
+  price.className="price";
+  price.textContent="K"+Number(item.price||0).toLocaleString("en-ZM");
+
+  const location=document.createElement("div");
+  location.className="location";
+  location.textContent=(item.category||"Other")+" • "+(item.province||"Unknown");
+
+  const actions=document.createElement("div");
+  actions.className="dashboard-actions";
+
+  const editButton=document.createElement("button");
+  editButton.type="button";
+  editButton.className="light";
+  editButton.textContent="Edit";
+  editButton.addEventListener("click",()=>editListing(item));
+
+  const deleteButton=document.createElement("button");
+  deleteButton.type="button";
+  deleteButton.className="delete-button";
+  deleteButton.textContent="Delete";
+  deleteButton.addEventListener("click",()=>deleteListing(item));
+
+  actions.append(editButton,deleteButton);
+  info.append(title,price,location,actions);
+  card.append(photo,info);
+  container.appendChild(card);
+ });
+}
+
+// EDIT A PRODUCT
+async function editListing(item){
+ const user=auth&&auth.currentUser;
+ if(!user||item.sellerId!==user.uid){
+  alert("You can only edit your own products.");
+  return;
+ }
+
+ const name=prompt("Enter product name:",item.name||"");
+ if(name===null)return;
+ if(!name.trim())return alert("Product name cannot be empty.");
+
+ const priceText=prompt("Enter price in Kwacha:",String(item.price||""));
+ if(priceText===null)return;
+ const price=Number(priceText);
+ if(!Number.isInteger(price)||price<=0){
+  return alert("Please enter a valid price greater than zero.");
+ }
+
+ const description=prompt("Enter product description:",item.description||"");
+ if(description===null)return;
+
+ const phone=prompt("Enter seller WhatsApp number:",item.sellerPhone||"");
+ if(phone===null)return;
+
+ const category=prompt("Enter category (Phones, Electronics, Fashion, Home, Furniture, Vehicles, Property, Agriculture or Other):",item.category||"Other");
+ if(category===null)return;
+
+ const allowedCategories=["Phones","Electronics","Fashion","Home","Furniture","Vehicles","Property","Agriculture","Other"];
+ if(!allowedCategories.includes(category.trim())){
+  return alert("Please use one of the listed categories exactly.");
+ }
+
+ const province=prompt("Enter province:",item.province||"");
+ if(province===null)return;
+
+ const allowedProvinces=["Central","Copperbelt","Eastern","Luapula","Lusaka","Muchinga","Northern","North-Western","Southern","Western"];
+ if(!allowedProvinces.includes(province.trim())){
+  return alert("Please enter a valid Zambian province.");
+ }
+
+ try{
+  await db.collection("listings").doc(item.id).update({
+   name:name.trim(),
+   price,
+   description:description.trim(),
+   sellerPhone:phone.trim(),
+   category:category.trim(),
+   province:province.trim()
+  });
+  alert("Your product has been updated successfully!");
+ }catch(error){
+  console.error(error);
+  alert("Could not update product: "+error.message);
+ }
+}
+
+// DELETE A PRODUCT
+async function deleteListing(item){
+ const user=auth&&auth.currentUser;
+ if(!user||item.sellerId!==user.uid){
+  alert("You can only delete your own products.");
+  return;
+ }
+
+ const confirmed=confirm("Are you sure you want to delete \""+(item.name||"this product")+"\"? This cannot be undone.");
+ if(!confirmed)return;
+
+ try{
+  await db.collection("listings").doc(item.id).delete();
+  alert("Your product has been deleted.");
+ }catch(error){
+  console.error(error);
+  alert("Could not delete product: "+error.message);
+ }
+}
 
 $("searchButton").addEventListener("click",renderListings);
 $("search").addEventListener("input",renderListings);
