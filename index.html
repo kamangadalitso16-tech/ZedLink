@@ -34,7 +34,7 @@ p{color:var(--muted);line-height:1.5}
 input,select,textarea{width:100%;padding:13px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:white;color:var(--ink);font-family:inherit}
 textarea{min-height:90px;resize:vertical}
 button{border:0;border-radius:10px;padding:13px 15px;background:var(--gold);color:var(--ink);font-weight:700;font-size:14px;cursor:pointer}
-button:disabled{opacity:.6}
+button:disabled{opacity:.6;cursor:not-allowed}
 button.green{background:var(--green);color:white}
 button.dark{background:#26352d;color:white}
 button.light{background:#e5f2ec;color:var(--green)}
@@ -174,7 +174,9 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
 
   <input id="sellerPhone" type="tel" inputmode="tel" placeholder="WhatsApp number e.g. 0977123456">
 
-  <input id="productImage" type="url" placeholder="Product image link (optional, HTTPS)">
+  <label for="productImage">Product Photo (optional)</label>
+  <input id="productImage" type="file" accept="image/jpeg,image/png,image/webp">
+  <p class="note">Choose a JPG, PNG or WebP photo. Maximum size: 5MB.</p>
 
   <p class="note">Your contact details may be shown to buyers. Only provide details you are comfortable sharing.</p>
 
@@ -233,6 +235,10 @@ const firebaseConfig = {
  messagingSenderId: "573854183327",
  appId: "1:573854183327:web:43e06b60e4d90dea3657aa"
 };
+
+// Cloudinary settings
+const CLOUDINARY_CLOUD_NAME = "wwiiwwad";
+const CLOUDINARY_UPLOAD_PRESET = "zedlink_upload";
 
 let db=null;
 let auth=null;
@@ -362,6 +368,53 @@ $("logoutButton").addEventListener("click",async()=>{
   setMessage("authMessage",error.message,"error");
  }
 });
+
+// Upload selected product photo to Cloudinary
+async function uploadProductImage(file){
+ if(!file)return "";
+
+ const allowedTypes=["image/jpeg","image/png","image/webp"];
+
+ if(!allowedTypes.includes(file.type)){
+  throw new Error("Please choose a JPG, PNG or WebP image.");
+ }
+
+ if(file.size>5*1024*1024){
+  throw new Error("Your photo is too large. Maximum size is 5MB.");
+ }
+
+ const uploadUrl="https://api.cloudinary.com/v1_1/"
+  +CLOUDINARY_CLOUD_NAME+"/image/upload";
+
+ const formData=new FormData();
+ formData.append("file",file);
+ formData.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);
+
+ const response=await fetch(uploadUrl,{
+  method:"POST",
+  body:formData
+ });
+
+ let result;
+ try{
+  result=await response.json();
+ }catch(error){
+  throw new Error("Cloudinary returned an invalid response.");
+ }
+
+ if(!response.ok){
+  console.error("Cloudinary upload error:",result);
+  throw new Error(
+   result.error?.message||"Photo upload failed. Please try again."
+  );
+ }
+
+ if(!result.secure_url){
+  throw new Error("Cloudinary did not return a secure photo link.");
+ }
+
+ return result.secure_url;
+}
 
 function loadListings(){
  db.collection("listings").orderBy("createdAt","desc").onSnapshot(snapshot=>{
@@ -509,6 +562,7 @@ document.addEventListener("keydown",event=>{
  if(event.key==="Escape")$("productModal").classList.remove("open");
 });
 
+// Submit product and upload its photo first if one was selected
 $("postForm").addEventListener("submit",async event=>{
  event.preventDefault();
 
@@ -523,20 +577,36 @@ $("postForm").addEventListener("submit",async event=>{
  const province=$("productProvince").value;
  const description=$("productDescription").value.trim();
  const sellerPhone=$("sellerPhone").value.trim();
- const imageUrl=$("productImage").value.trim();
+ const imageFile=$("productImage").files[0];
 
  if(!name||!Number.isInteger(price)||price<=0||!category||!province){
   return setMessage("postMessage","Complete the product name, price, category and province.","error");
  }
 
- if(imageUrl&&!isSafeImageUrl(imageUrl)){
-  return setMessage("postMessage","Image link must be a valid HTTPS address.","error");
+ if(imageFile){
+  const allowedTypes=["image/jpeg","image/png","image/webp"];
+  if(!allowedTypes.includes(imageFile.type)){
+   return setMessage("postMessage","Please choose a JPG, PNG or WebP photo.","error");
+  }
+  if(imageFile.size>5*1024*1024){
+   return setMessage("postMessage","Your photo is too large. Maximum size is 5MB.","error");
+  }
  }
 
  $("submitButton").disabled=true;
- $("submitButton").textContent="Saving...";
 
  try{
+  let imageUrl="";
+
+  if(imageFile){
+   $("submitButton").textContent="Uploading photo...";
+   setMessage("postMessage","Uploading your product photo. Please wait...");
+   imageUrl=await uploadProductImage(imageFile);
+  }
+
+  $("submitButton").textContent="Saving listing...";
+  setMessage("postMessage","Saving your product listing...");
+
   await db.collection("listings").add({
    name,
    price,
@@ -551,12 +621,12 @@ $("postForm").addEventListener("submit",async event=>{
   });
 
   $("postForm").reset();
-  setMessage("postMessage","Your listing has been saved successfully!","success");
+  setMessage("postMessage","Your listing and photo have been saved successfully!","success");
   window.scrollTo({top:$("listings").offsetTop,behavior:"smooth"});
 
  }catch(error){
-  console.error("Could not save listing:",error);
-  setMessage("postMessage","Could not save listing: "+error.message,"error");
+  console.error("Could not post listing:",error);
+  setMessage("postMessage","Could not post listing: "+error.message,"error");
  }finally{
   $("submitButton").disabled=false;
   $("submitButton").textContent="Add Listing";
