@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,780 +6,386 @@
 <meta name="theme-color" content="#087f5b">
 <meta name="description" content="Buy, sell and discover products across Zambia on ZedLink.">
 <title>ZedLink — Zambia Connects Here</title>
-
 <style>
-:root {
-  --green:#087f5b;--dark:#056348;--gold:#f5b82e;
-  --ink:#17211d;--muted:#66736d;--bg:#f5f8f6;
-  --line:#dfe8e2;--white:#fff;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
-header{background:var(--green);color:white;padding:22px 16px}
-.wrap{max-width:1050px;margin:auto}
-.brand{font-size:30px;font-weight:800}
-.brand span{color:var(--gold)}
-.tagline{margin-top:5px}
-main{padding:18px 16px 40px}
-.hero{background:white;border-radius:17px;padding:20px;margin-bottom:17px;box-shadow:0 3px 14px #10251a0c}
-h1{font-size:24px;margin:0 0 8px}
-h2{font-size:21px;margin:0 0 10px}
-p{color:var(--muted);line-height:1.5}
-input,select,textarea{width:100%;padding:13px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:white;color:var(--ink);font-family:inherit}
-textarea{min-height:90px;resize:vertical}
-button{border:0;border-radius:10px;padding:13px 15px;background:var(--gold);color:var(--ink);font-weight:700;font-size:14px;cursor:pointer}
-button:disabled{opacity:.6;cursor:not-allowed}
-button.green{background:var(--green);color:white}
-button.dark{background:#26352d;color:white}
-button.light{background:#e5f2ec;color:var(--green)}
-.form-grid{display:grid;gap:10px}
-.search{display:grid;grid-template-columns:1fr 180px auto;gap:8px;margin:16px 0}
-.categories{display:flex;gap:8px;overflow-x:auto;padding:5px 0 12px}
-.categories button{white-space:nowrap;background:#e5f2ec;color:var(--green);padding:10px 14px}
-.categories button.active{background:var(--green);color:white}
-.section-title{display:flex;justify-content:space-between;align-items:center;margin:20px 0 12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px}
-.item{background:white;border-radius:14px;overflow:hidden;border:1px solid #e8eee9;cursor:pointer}
-.photo{height:130px;display:grid;place-items:center;background:#eaf3ee;font-size:45px;overflow:hidden}
-.photo img{width:100%;height:100%;object-fit:cover}
-.details{padding:12px}
-.details h3{margin:0 0 7px;font-size:15px;overflow-wrap:anywhere}
-.price{color:var(--green);font-weight:800;margin-bottom:6px}
-.location{font-size:12px;color:var(--muted)}
-.status{font-size:13px;margin-top:12px;overflow-wrap:anywhere}
-.success{color:var(--green)}
-.error{color:#b42318}
+:root{--green:#087f5b;--dark:#056348;--gold:#f5b82e;--ink:#17211d;--muted:#66736d;--bg:#f5f8f6;--line:#dfe8e2;--white:#fff;--red:#b42318}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--green);color:white;padding:20px 16px}.wrap{max-width:1050px;margin:auto}
+.brand{font-size:30px;font-weight:800}.brand span{color:var(--gold)}.tagline{margin-top:5px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}nav button{background:#ffffff20;color:#fff;border:1px solid #ffffff55;padding:9px 12px}
+main{padding:18px 16px 40px}.hero{background:white;border-radius:17px;padding:20px;margin-bottom:17px;box-shadow:0 3px 14px #10251a0c}
+h1{font-size:24px;margin:0 0 8px}h2{font-size:21px;margin:0 0 10px}h3{overflow-wrap:anywhere}
+p{color:var(--muted);line-height:1.5}input,select,textarea{width:100%;padding:13px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:white;color:var(--ink);font-family:inherit}
+textarea{min-height:90px;resize:vertical}button{border:0;border-radius:10px;padding:12px 14px;background:var(--gold);color:var(--ink);font-weight:700;font-size:14px;cursor:pointer}
+button:disabled{opacity:.6;cursor:not-allowed}button.green{background:var(--green);color:white}button.dark{background:#26352d;color:white}button.light{background:#e5f2ec;color:var(--green)}button.danger{background:#fde8e7;color:var(--red)}
+a{color:var(--green)}.form-grid{display:grid;gap:10px}.search{display:grid;grid-template-columns:1fr 180px auto;gap:8px;margin:16px 0}
+.categories{display:flex;gap:8px;overflow-x:auto;padding:5px 0 12px}.categories button{white-space:nowrap;background:#e5f2ec;color:var(--green);padding:10px 14px}.categories button.active{background:var(--green);color:white}
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:20px 0 12px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px}
+.item{background:white;border-radius:14px;overflow:hidden;border:1px solid #e8eee9;cursor:pointer}.photo{height:130px;display:grid;place-items:center;background:#eaf3ee;font-size:45px;overflow:hidden}.photo img{width:100%;height:100%;object-fit:cover}
+.details{padding:12px}.details h3{margin:0 0 7px;font-size:15px}.price{color:var(--green);font-weight:800;margin-bottom:6px}.location,.note{font-size:12px;color:var(--muted)}
+.status{font-size:13px;margin-top:12px;overflow-wrap:anywhere}.success{color:var(--green)}.error{color:var(--red)}
 .account-status{padding:12px;background:#e5f2ec;border-radius:10px;margin:12px 0;font-size:14px;overflow-wrap:anywhere}
-.auth-actions{display:flex;gap:8px;flex-wrap:wrap}
-.auth-actions button{flex:1}
-.hidden{display:none!important}
-.note{font-size:12px;color:var(--muted)}
+.auth-actions,.actions{display:flex;gap:8px;flex-wrap:wrap}.auth-actions button{flex:1}.hidden{display:none!important}
 .empty{background:white;border:1px dashed var(--line);border-radius:14px;padding:20px;text-align:center;color:var(--muted)}
-.modal{display:none;position:fixed;inset:0;background:#0009;z-index:9999;padding:16px;align-items:center;justify-content:center;overflow-y:auto}
-.modal.open{display:flex}
-.modal-content{background:white;width:100%;max-width:460px;max-height:92vh;overflow-y:auto;padding:22px;border-radius:18px}
-.modal-photo{height:190px;border-radius:12px;background:#eaf3ee;display:grid;place-items:center;font-size:60px;overflow:hidden;margin-bottom:15px}
-.modal-photo img{width:100%;height:100%;object-fit:contain}
-.modal-price{font-size:22px;color:var(--green);font-weight:800;margin:8px 0}
-.modal-content button,.modal-content a{display:block;width:100%;margin-top:10px;text-align:center;text-decoration:none}
-
-/* Seller dashboard */
-.dashboard-list{display:grid;gap:12px;margin-top:15px}
-.dashboard-item{display:grid;grid-template-columns:90px 1fr;gap:12px;padding:12px;border:1px solid var(--line);border-radius:13px;background:#fff}
-.dashboard-photo{width:90px;height:90px;border-radius:10px;overflow:hidden;background:#eaf3ee;display:grid;place-items:center;font-size:32px}
-.dashboard-photo img{width:100%;height:100%;object-fit:cover}
-.dashboard-info{min-width:0}
-.dashboard-info h3{margin:0 0 6px;font-size:16px;overflow-wrap:anywhere}
-.dashboard-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.dashboard-actions button{padding:10px 13px}
-.dashboard-actions .delete-button{background:#fde8e7;color:#b42318}
-.dashboard-count{font-size:13px;color:var(--muted)}
+.modal{display:none;position:fixed;inset:0;background:#0009;z-index:9999;padding:16px;align-items:center;justify-content:center;overflow-y:auto}.modal.open{display:flex}
+.modal-content{background:white;width:100%;max-width:500px;max-height:92vh;overflow-y:auto;padding:22px;border-radius:18px}
+.modal-photo{height:190px;border-radius:12px;background:#eaf3ee;display:grid;place-items:center;font-size:60px;overflow:hidden;margin-bottom:15px}.modal-photo img{width:100%;height:100%;object-fit:contain}
+.modal-price{font-size:22px;color:var(--green);font-weight:800;margin:8px 0}.modal-content button,.modal-content a.action-link{display:block;width:100%;margin-top:10px;text-align:center;text-decoration:none}
+.dashboard-list{display:grid;gap:12px;margin-top:15px}.dashboard-item{display:grid;grid-template-columns:90px 1fr;gap:12px;padding:12px;border:1px solid var(--line);border-radius:13px;background:#fff}
+.dashboard-photo{width:90px;height:90px;border-radius:10px;overflow:hidden;background:#eaf3ee;display:grid;place-items:center;font-size:32px}.dashboard-photo img{width:100%;height:100%;object-fit:cover}
+.dashboard-info{min-width:0}.dashboard-info h3{margin:0 0 6px;font-size:16px}.dashboard-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.dashboard-actions button{padding:9px 11px}.dashboard-count{font-size:13px;color:var(--muted)}
+.panel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}.stat{background:#f3f8f5;border:1px solid var(--line);border-radius:12px;padding:14px}.stat strong{display:block;font-size:23px;color:var(--green)}
+.inline-row{display:flex;gap:8px;align-items:center}.inline-row>*{flex:1;min-width:0}.profile-line{padding:10px 0;border-bottom:1px solid var(--line)}
 footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
-@media(max-width:600px){
- .search{grid-template-columns:1fr}
- .search button{width:100%}
- .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
- .photo{height:105px}
- .auth-actions{flex-direction:column}
- .dashboard-item{grid-template-columns:75px 1fr}
- .dashboard-photo{width:75px;height:75px}
-}
+@media(max-width:600px){.search{grid-template-columns:1fr}.search button{width:100%}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.photo{height:105px}.auth-actions{flex-direction:column}.dashboard-item{grid-template-columns:75px 1fr}.dashboard-photo{width:75px;height:75px}nav button{flex:1}}
 </style>
 </head>
-
 <body>
-<header>
- <div class="wrap">
-  <div class="brand">Zed<span>Link</span></div>
-  <div class="tagline">Zambia connects here.</div>
- </div>
-</header>
+<header><div class="wrap">
+ <div class="brand">Zed<span>Link</span></div><div class="tagline">Zambia connects here.</div>
+ <nav aria-label="Main navigation">
+  <button type="button" onclick="goTo('home')">Home</button>
+  <button type="button" onclick="goTo('accountSection')">My Account</button>
+  <button type="button" onclick="goTo('postSection')">Sell</button>
+  <button type="button" onclick="goTo('sellerDashboard')">My Listings</button>
+  <button type="button" onclick="goTo('favoritesSection')">Favourites</button>
+  <button type="button" id="adminNav" class="hidden" onclick="goTo('adminSection')">Admin</button>
+ </nav>
+</div></header>
 
-<main class="wrap">
-
+<main class="wrap" id="home">
 <section class="hero">
- <h1>Buy, sell and discover in Zambia 🇿🇲</h1>
- <p>Find products and local businesses across Zambia.</p>
-
+ <h1>Buy, sell and discover in Zambia 🇿🇲</h1><p>Find products and local businesses across Zambia.</p>
  <div class="search">
   <input id="search" type="search" placeholder="What are you looking for?">
-  <select id="province">
-   <option value="">All provinces</option>
-   <option>Central</option><option>Copperbelt</option>
-   <option>Eastern</option><option>Luapula</option>
-   <option>Lusaka</option><option>Muchinga</option>
-   <option>Northern</option><option>North-Western</option>
-   <option>Southern</option><option>Western</option>
-  </select>
+  <select id="province"><option value="">All provinces</option><option>Central</option><option>Copperbelt</option><option>Eastern</option><option>Luapula</option><option>Lusaka</option><option>Muchinga</option><option>Northern</option><option>North-Western</option><option>Southern</option><option>Western</option></select>
   <button id="searchButton" type="button">Search</button>
  </div>
-
  <div class="categories">
-  <button type="button" class="active" data-category="All">All</button>
-  <button type="button" data-category="Phones">📱 Phones</button>
-  <button type="button" data-category="Electronics">💻 Electronics</button>
-  <button type="button" data-category="Fashion">👟 Fashion</button>
-  <button type="button" data-category="Home">🏠 Home</button>
-  <button type="button" data-category="Furniture">🪑 Furniture</button>
-  <button type="button" data-category="Vehicles">🚗 Vehicles</button>
-  <button type="button" data-category="Property">🏡 Property</button>
-  <button type="button" data-category="Agriculture">🌽 Agriculture</button>
-  <button type="button" data-category="Other">🛍️ Other</button>
+  <button type="button" class="active" data-category="All">All</button><button type="button" data-category="Phones">📱 Phones</button><button type="button" data-category="Electronics">💻 Electronics</button><button type="button" data-category="Fashion">👟 Fashion</button><button type="button" data-category="Home">🏠 Home</button><button type="button" data-category="Furniture">🪑 Furniture</button><button type="button" data-category="Vehicles">🚗 Vehicles</button><button type="button" data-category="Property">🏡 Property</button><button type="button" data-category="Agriculture">🌽 Agriculture</button><button type="button" data-category="Other">🛍️ Other</button>
  </div>
 </section>
 
-<section class="hero">
- <h2>My ZedLink Account</h2>
- <p>Create an account or sign in to start selling.</p>
+<section class="hero" id="accountSection">
+ <h2>My ZedLink Account</h2><p>Create one account to buy, sell and manage your profile.</p>
  <div id="accountStatus" class="account-status">Connecting...</div>
-
  <form id="authForm" class="form-grid">
   <input id="email" type="email" autocomplete="email" required placeholder="Email address">
   <input id="password" type="password" autocomplete="current-password" required minlength="6" placeholder="Password">
-  <div class="auth-actions">
-   <button type="submit" class="green" id="authButton">Sign In</button>
-   <button type="button" id="registerButton">Create New Account</button>
-  </div>
+  <div class="auth-actions"><button type="submit" class="green" id="authButton">Sign In</button><button type="button" id="registerButton">Create New Account</button></div>
   <button type="button" class="dark" id="resetButton">Forgot Password?</button>
  </form>
-
  <button type="button" id="logoutButton" class="dark hidden">Sign Out</button>
  <p id="authMessage" class="status"></p>
 </section>
 
-<section class="hero">
- <h2>Post a Product</h2>
- <p id="postIntro">Sign in before posting a product.</p>
+<section class="hero hidden" id="profileSection">
+ <h2>My Buyer & Seller Profile</h2><p>Your public seller details help buyers know how to contact you. Do not enter your MTN PIN or password.</p>
+ <form id="profileForm" class="form-grid">
+  <input id="profileName" maxlength="60" placeholder="Your name or shop name">
+  <input id="profilePhone" type="tel" placeholder="WhatsApp phone e.g. 0977123456">
+  <input id="profileMtn" type="tel" placeholder="MTN Mobile Money number (optional)">
+  <select id="profileProvince"><option value="">Choose your province</option><option>Central</option><option>Copperbelt</option><option>Eastern</option><option>Luapula</option><option>Lusaka</option><option>Muchinga</option><option>Northern</option><option>North-Western</option><option>Southern</option><option>Western</option></select>
+  <textarea id="profileBio" maxlength="300" placeholder="Short introduction (optional)"></textarea>
+  <button class="green" type="submit" id="saveProfileButton">Save Profile</button>
+ </form><p id="profileMessage" class="status"></p>
+</section>
 
+<section class="hero" id="postSection">
+ <h2>Post a Product</h2><p id="postIntro">Sign in before posting a product.</p>
  <form id="postForm" class="form-grid">
   <input id="productName" required maxlength="60" placeholder="Product name">
   <input id="productPrice" required type="number" min="1" step="1" placeholder="Price in Zambian Kwacha (K)">
-
-  <select id="productCategory" required>
-   <option value="">Choose category</option>
-   <option>Phones</option><option>Electronics</option>
-   <option>Fashion</option><option>Home</option>
-   <option>Furniture</option><option>Vehicles</option>
-   <option>Property</option><option>Agriculture</option>
-   <option>Other</option>
-  </select>
-
-  <select id="productProvince" required>
-   <option value="">Choose province</option>
-   <option>Central</option><option>Copperbelt</option>
-   <option>Eastern</option><option>Luapula</option>
-   <option>Lusaka</option><option>Muchinga</option>
-   <option>Northern</option><option>North-Western</option>
-   <option>Southern</option><option>Western</option>
-  </select>
-
+  <select id="productCategory" required><option value="">Choose category</option><option>Phones</option><option>Electronics</option><option>Fashion</option><option>Home</option><option>Furniture</option><option>Vehicles</option><option>Property</option><option>Agriculture</option><option>Other</option></select>
+  <select id="productProvince" required><option value="">Choose province</option><option>Central</option><option>Copperbelt</option><option>Eastern</option><option>Luapula</option><option>Lusaka</option><option>Muchinga</option><option>Northern</option><option>North-Western</option><option>Southern</option><option>Western</option></select>
   <textarea id="productDescription" maxlength="500" placeholder="Product description"></textarea>
   <input id="sellerPhone" type="tel" inputmode="tel" placeholder="WhatsApp number e.g. 0977123456">
-
-  <label for="productImage">Product Photo (optional)</label>
-  <input id="productImage" type="file" accept="image/jpeg,image/png,image/webp">
-  <p class="note">Choose a JPG, PNG or WebP photo. Maximum size: 5MB.</p>
-  <p class="note">Your contact details may be shown to buyers. Only provide details you are comfortable sharing.</p>
-
+  <input id="sellerMtn" type="tel" inputmode="tel" placeholder="MTN Mobile Money number (optional)">
+  <label for="productImage">Product Photo (optional)</label><input id="productImage" type="file" accept="image/jpeg,image/png,image/webp">
+  <p class="note">JPG, PNG or WebP. Maximum 5MB. Never enter or share your Mobile Money PIN.</p>
   <button type="submit" class="green" id="submitButton">Add Listing</button>
- </form>
- <p id="postMessage" class="status"></p>
+ </form><p id="postMessage" class="status"></p>
 </section>
 
-<!-- SELLER DASHBOARD -->
 <section class="hero" id="sellerDashboard">
- <h2>My Seller Dashboard</h2>
- <p>View, edit and delete products you have posted.</p>
- <div id="dashboardStatus" class="account-status">Sign in to manage your products.</div>
- <div id="dashboardCount" class="dashboard-count"></div>
- <div id="myListings" class="dashboard-list"></div>
+ <h2>My Seller Dashboard</h2><p>View, edit and delete products you have posted.</p>
+ <div id="dashboardStatus" class="account-status">Sign in to manage your products.</div><div id="dashboardCount" class="dashboard-count"></div><div id="myListings" class="dashboard-list"></div>
 </section>
 
-<div class="section-title">
- <h2>Latest Listings</h2>
- <span id="listingCount">Loading...</span>
-</div>
+<section class="hero" id="favoritesSection"><h2>My Favourites</h2><p>Save products to find them again later. Sign in to use favourites.</p><div id="favoritesList" class="grid"><div class="empty">Sign in to see your favourites.</div></div></section>
 
-<p id="loadingMessage">Loading listings...</p>
-<section class="grid" id="listings"></section>
+<section class="hero hidden" id="adminSection">
+ <h2>Administrator Dashboard</h2><p>Review marketplace activity and reported listings. Admin access is controlled by the UID in the website and Firestore rules.</p>
+ <div class="panel-grid"><div class="stat"><strong id="adminUsers">—</strong>Registered profiles</div><div class="stat"><strong id="adminListings">—</strong>Product listings</div><div class="stat"><strong id="adminReports">—</strong>Open reports</div></div>
+ <h3>Recent user profiles</h3><div id="adminUsersList" class="dashboard-list"></div>
+ <h3>Reported listings</h3><div id="adminReportsList" class="dashboard-list"></div>
+ <h3>All listings</h3><div id="adminListingsList" class="dashboard-list"></div>
+ <p id="adminMessage" class="status"></p>
+</section>
 
-<p>Please meet sellers safely and verify products before making payments. ZedLink does not process payments.</p>
+<div class="section-title"><h2>Latest Listings</h2><span id="listingCount">Loading...</span></div>
+<p id="loadingMessage">Loading listings...</p><section class="grid" id="listings"></section>
+<p>Please meet sellers safely and inspect products before paying. Buyers pay sellers directly; ZedLink does not collect, hold or verify payments.</p>
 </main>
 
-<div class="modal" id="productModal" role="dialog" aria-modal="true">
- <div class="modal-content">
-  <div class="modal-photo" id="modalPhoto">🛍️</div>
-  <h2 id="modalName">Product details</h2>
-  <div class="modal-price" id="modalPrice"></div>
-  <p id="modalCategory"></p>
-  <p id="modalProvince"></p>
-  <p id="modalDescription"></p>
-  <p id="modalSeller"></p>
-
-  <a id="whatsappSeller" class="hidden" href="#" target="_blank" rel="noopener noreferrer">
-   <button type="button" class="green">Contact Seller on WhatsApp</button>
-  </a>
-
-  <a id="emailSeller" class="hidden" href="#">
-   <button type="button" class="light">Contact Seller by Email</button>
-  </a>
-
+<!-- PRODUCT DETAILS -->
+<div class="modal" id="productModal" role="dialog" aria-modal="true" aria-labelledby="modalName">
+ <div class="modal-content"><div class="modal-photo" id="modalPhoto">🛍️</div>
+  <h2 id="modalName">Product details</h2><div class="modal-price" id="modalPrice"></div>
+  <p id="modalCategory"></p><p id="modalProvince"></p><p id="modalDescription"></p>
+  <div class="profile-line" id="modalSeller"></div><p id="modalPayment"></p>
+  <button type="button" class="light" id="favoriteButton">♡ Save to Favourites</button>
+  <button type="button" class="green hidden" id="whatsappSeller">Contact Seller on WhatsApp</button>
+  <button type="button" class="light hidden" id="emailSeller">Contact Seller by Email</button>
+  <button type="button" class="dark" id="viewSellerButton">View Seller Profile</button>
+  <button type="button" class="danger" id="reportListingButton">Report this Listing</button>
   <button type="button" class="dark" id="closeModal">Close</button>
  </div>
 </div>
 
+<!-- SELLER PUBLIC PROFILE -->
+<div class="modal" id="sellerModal" role="dialog" aria-modal="true" aria-labelledby="sellerModalName">
+ <div class="modal-content"><h2 id="sellerModalName">Seller profile</h2><div id="sellerModalInfo"></div><h3>Products from this seller</h3><div id="sellerProducts" class="grid"></div><button type="button" class="dark" id="closeSellerModal">Close</button></div>
+</div>
 <footer>© 2026 ZedLink • Built for Zambia 🇿🇲</footer>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
 <script>
 "use strict";
 
+/* IMPORTANT: Replace this value with YOUR Firebase Authentication UID before enabling admin tools.
+   Firestore rules must contain the same UID. Never use an email address as the only admin security check. */
+const ADMIN_UID = "REPLACE_WITH_YOUR_FIREBASE_AUTH_UID";
+
 const firebaseConfig = {
- apiKey: "AIzaSyDR92dXWMcfi1yKfczTUvjr5i-hXp1Rvyw",
- authDomain: "zedlink-zambia.firebaseapp.com",
- projectId: "zedlink-zambia",
- storageBucket: "zedlink-zambia.firebasestorage.app",
- messagingSenderId: "573854183327",
- appId: "1:573854183327:web:43e06b60e4d90dea3657aa"
+ apiKey:"AIzaSyDR92dXWMcfi1yKfczTUvjr5i-hXp1Rvyw",
+ authDomain:"zedlink-zambia.firebaseapp.com",
+ projectId:"zedlink-zambia",
+ storageBucket:"zedlink-zambia.firebasestorage.app",
+ messagingSenderId:"573854183327",
+ appId:"1:573854183327:web:43e06b60e4d90dea3657aa"
 };
-
-const CLOUDINARY_CLOUD_NAME = "wwiiwwad";
-const CLOUDINARY_UPLOAD_PRESET = "zedlink_upload";
-
-let db=null;
-let auth=null;
-let activeCategory="All";
-let isRegistering=false;
-let currentListings=[];
-
+const CLOUDINARY_CLOUD_NAME="wwiiwwad";
+const CLOUDINARY_UPLOAD_PRESET="zedlink_upload";
+let db=null,auth=null,activeCategory="All",isRegistering=false,currentListings=[],currentUserProfile={},selectedProduct=null,favoriteIds=new Set();
 const $=id=>document.getElementById(id);
-
-function setMessage(id,text,type=""){
- const el=$(id);
- el.textContent=text;
- el.className="status"+(type?" "+type:"");
-}
-
-function categoryIcon(category){
- const icons={
-  Phones:"📱",Electronics:"💻",Fashion:"👟",Home:"🏠",
-  Furniture:"🪑",Vehicles:"🚗",Property:"🏡",
-  Agriculture:"🌽",Other:"🛍️"
- };
- return icons[category]||"🛍️";
-}
+const PROVINCES=["Central","Copperbelt","Eastern","Luapula","Lusaka","Muchinga","Northern","North-Western","Southern","Western"];
+const CATEGORIES=["Phones","Electronics","Fashion","Home","Furniture","Vehicles","Property","Agriculture","Other"];
+function goTo(id){$(id)?.scrollIntoView({behavior:"smooth",block:"start"});}
+function setMessage(id,text,type=""){const el=$(id);if(el){el.textContent=text;el.className="status"+(type?" "+type:"");}}
+function categoryIcon(category){return ({Phones:"📱",Electronics:"💻",Fashion:"👟",Home:"🏠",Furniture:"🪑",Vehicles:"🚗",Property:"🏡",Agriculture:"🌽",Other:"🛍️"})[category]||"🛍️";}
+function money(value){return "K"+Number(value||0).toLocaleString("en-ZM");}
+function isSafeImageUrl(value){try{return new URL(value).protocol==="https:";}catch(e){return false;}}
+function normalizeZambianPhone(phone){let d=String(phone||"").replace(/\D/g,"");if(d.startsWith("00"))d=d.slice(2);if(d.startsWith("0")&&d.length===10)d="26"+d;else if(d.length===9)d="260"+d;return d.startsWith("260")&&d.length===12?d:"";}
+function isAdmin(){return !!auth?.currentUser&&ADMIN_UID!=="REPLACE_WITH_YOUR_FIREBASE_AUTH_UID"&&auth.currentUser.uid===ADMIN_UID;}
+function friendlyAuthError(error){const m={"auth/email-already-in-use":"That email already has an account. Please sign in.","auth/invalid-email":"Please enter a valid email address.","auth/weak-password":"Choose a stronger password.","auth/user-not-found":"No account found for that email.","auth/wrong-password":"Incorrect password.","auth/invalid-credential":"Email or password is incorrect.","auth/too-many-requests":"Too many attempts. Please wait.","auth/network-request-failed":"Check your internet connection."};return m[error.code]||error.message||"Something went wrong.";}
 
 function initializeFirebase(){
- try{
-  if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
-  db=firebase.firestore();
-  auth=firebase.auth();
-  watchAccount();
-  loadListings();
- }catch(error){
-  console.error(error);
-  $("loadingMessage").textContent="Firebase could not start. Check your internet connection.";
-  $("accountStatus").textContent="Could not connect to Firebase.";
- }
+ try{if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);db=firebase.firestore();auth=firebase.auth();watchAccount();loadListings();}
+ catch(error){console.error(error);$("loadingMessage").textContent="Firebase could not start. Check your internet connection.";$("accountStatus").textContent="Could not connect to Firebase.";}
 }
-
 function watchAccount(){
- auth.onAuthStateChanged(user=>{
+ auth.onAuthStateChanged(async user=>{
+  favoriteIds.clear();currentUserProfile={};
   if(user){
    $("accountStatus").textContent="Signed in as: "+(user.email||"your account");
    $("postIntro").textContent="You are signed in. Complete the form to post.";
-   $("logoutButton").classList.remove("hidden");
-   $("authForm").classList.add("hidden");
+   $("logoutButton").classList.remove("hidden");$("authForm").classList.add("hidden");$("profileSection").classList.remove("hidden");
+   await loadMyProfile(user);await loadFavorites();
   }else{
-   $("accountStatus").textContent="Browsing as a visitor. Sign in to post products.";
+   $("accountStatus").textContent="Browsing as a visitor. Sign in to post, save favourites and manage your profile.";
    $("postIntro").textContent="Sign in to your account before posting.";
-   $("logoutButton").classList.add("hidden");
-   $("authForm").classList.remove("hidden");
+   $("logoutButton").classList.add("hidden");$("authForm").classList.remove("hidden");$("profileSection").classList.add("hidden");
+   $("favoritesList").innerHTML='<div class="empty">Sign in to see your favourites.</div>';
   }
-  renderSellerDashboard();
+  $("adminNav").classList.toggle("hidden",!isAdmin());$("adminSection").classList.toggle("hidden",!isAdmin());
+  renderListings();renderSellerDashboard();if(isAdmin())loadAdminDashboard();
  });
 }
-
-$("authForm").addEventListener("submit",async event=>{
- event.preventDefault();
- if(!auth)return setMessage("authMessage","Firebase is not connected.","error");
-
- const email=$("email").value.trim();
- const password=$("password").value;
- $("authButton").disabled=true;
- $("authButton").textContent=isRegistering?"Creating account...":"Signing in...";
-
+async function loadMyProfile(user){
  try{
-  if(isRegistering){
-   await auth.createUserWithEmailAndPassword(email,password);
-   setMessage("authMessage","Account created successfully!","success");
-  }else{
-   await auth.signInWithEmailAndPassword(email,password);
-   setMessage("authMessage","Welcome back!","success");
-  }
-  $("authForm").reset();
-  isRegistering=false;
-  $("registerButton").textContent="Create New Account";
-  $("authButton").textContent="Sign In";
- }catch(error){
-  setMessage("authMessage",friendlyAuthError(error),"error");
- }finally{
-  $("authButton").disabled=false;
-  $("authButton").textContent="Sign In";
- }
-});
-
-$("registerButton").addEventListener("click",()=>{
- isRegistering=!isRegistering;
- $("authButton").textContent=isRegistering?"Create Account":"Sign In";
- $("registerButton").textContent=isRegistering?"Switch to Sign In":"Create New Account";
- $("password").setAttribute("autocomplete",isRegistering?"new-password":"current-password");
-});
-
-function friendlyAuthError(error){
- const messages={
-  "auth/email-already-in-use":"That email already has an account. Please sign in.",
-  "auth/invalid-email":"Please enter a valid email address.",
-  "auth/weak-password":"Choose a stronger password.",
-  "auth/user-not-found":"No account found for that email.",
-  "auth/wrong-password":"Incorrect password.",
-  "auth/invalid-credential":"Email or password is incorrect.",
-  "auth/too-many-requests":"Too many attempts. Please wait.",
-  "auth/network-request-failed":"Check your internet connection."
- };
- return messages[error.code]||error.message||"Something went wrong.";
+  const snap=await db.collection("users").doc(user.uid).get();
+  currentUserProfile=snap.exists?snap.data():{};
+  $("profileName").value=currentUserProfile.displayName||"";
+  $("profilePhone").value=currentUserProfile.phone||"";
+  $("profileMtn").value=currentUserProfile.mtnNumber||"";
+  $("profileProvince").value=currentUserProfile.province||"";
+  $("profileBio").value=currentUserProfile.bio||"";
+ }catch(error){console.error(error);setMessage("profileMessage","Could not load profile. Check Firestore rules.","error");}
 }
-
-$("resetButton").addEventListener("click",async()=>{
- const email=$("email").value.trim();
- if(!email)return setMessage("authMessage","Enter your email address first.","error");
+$("authForm").addEventListener("submit",async e=>{
+ e.preventDefault();if(!auth)return setMessage("authMessage","Firebase is not connected.","error");
+ $("authButton").disabled=true;$("authButton").textContent=isRegistering?"Creating account...":"Signing in...";
  try{
-  await auth.sendPasswordResetEmail(email);
-  setMessage("authMessage","Password reset email sent.","success");
- }catch(error){
-  setMessage("authMessage",friendlyAuthError(error),"error");
- }
+  if(isRegistering){const result=await auth.createUserWithEmailAndPassword($("email").value.trim(),$("password").value);await db.collection("users").doc(result.user.uid).set({email:result.user.email||"",createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});setMessage("authMessage","Account created! Complete your profile below.","success");}
+  else{await auth.signInWithEmailAndPassword($("email").value.trim(),$("password").value);setMessage("authMessage","Welcome back!","success");}
+  $("authForm").reset();isRegistering=false;$("registerButton").textContent="Create New Account";$("authButton").textContent="Sign In";
+ }catch(error){setMessage("authMessage",friendlyAuthError(error),"error");}
+ finally{$("authButton").disabled=false;$("authButton").textContent="Sign In";}
 });
+$("registerButton").addEventListener("click",()=>{isRegistering=!isRegistering;$("authButton").textContent=isRegistering?"Create Account":"Sign In";$("registerButton").textContent=isRegistering?"Switch to Sign In":"Create New Account";$("password").setAttribute("autocomplete",isRegistering?"new-password":"current-password");});
+$("resetButton").addEventListener("click",async()=>{const email=$("email").value.trim();if(!email)return setMessage("authMessage","Enter your email address first.","error");try{await auth.sendPasswordResetEmail(email);setMessage("authMessage","Password reset email sent.","success");}catch(error){setMessage("authMessage",friendlyAuthError(error),"error");}});
+$("logoutButton").addEventListener("click",async()=>{try{await auth.signOut();setMessage("authMessage","You have signed out.","success");}catch(error){setMessage("authMessage",error.message,"error");}});
 
-$("logoutButton").addEventListener("click",async()=>{
- try{
-  await auth.signOut();
-  setMessage("authMessage","You have signed out.","success");
- }catch(error){
-  setMessage("authMessage",error.message,"error");
- }
+$("profileForm").addEventListener("submit",async e=>{
+ e.preventDefault();const user=auth?.currentUser;if(!user)return setMessage("profileMessage","Please sign in first.","error");
+ const profile={displayName:$("profileName").value.trim().slice(0,60),phone:$("profilePhone").value.trim().slice(0,25),mtnNumber:$("profileMtn").value.trim().slice(0,25),province:$("profileProvince").value,bio:$("profileBio").value.trim().slice(0,300),email:user.email||"",updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
+ try{const privateProfile={email:user.email||"",updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
+  const publicProfile={displayName:profile.displayName,phone:profile.phone,mtnNumber:profile.mtnNumber,province:profile.province,bio:profile.bio,updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
+  await db.collection("users").doc(user.uid).set(privateProfile,{merge:true});
+  await db.collection("sellerProfiles").doc(user.uid).set(publicProfile,{merge:true});
+  currentUserProfile={...currentUserProfile,...profile};setMessage("profileMessage","Your profile has been saved.","success");}
+ catch(error){console.error(error);setMessage("profileMessage","Could not save profile: "+error.message,"error");}
 });
 
 async function uploadProductImage(file){
- if(!file)return "";
-
- const allowedTypes=["image/jpeg","image/png","image/webp"];
- if(!allowedTypes.includes(file.type)){
-  throw new Error("Please choose a JPG, PNG or WebP image.");
- }
- if(file.size>5*1024*1024){
-  throw new Error("Your photo is too large. Maximum size is 5MB.");
- }
-
- const uploadUrl="https://api.cloudinary.com/v1_1/"
-  +CLOUDINARY_CLOUD_NAME+"/image/upload";
-
- const formData=new FormData();
- formData.append("file",file);
- formData.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);
-
- const response=await fetch(uploadUrl,{method:"POST",body:formData});
-
- let result;
- try{result=await response.json();}
- catch(error){throw new Error("Cloudinary returned an invalid response.");}
-
- if(!response.ok){
-  console.error("Cloudinary upload error:",result);
-  throw new Error(result.error?.message||"Photo upload failed. Please try again.");
- }
- if(!result.secure_url)throw new Error("Cloudinary did not return a secure photo link.");
- return result.secure_url;
+ if(!file)return "";if(!["image/jpeg","image/png","image/webp"].includes(file.type))throw new Error("Choose a JPG, PNG or WebP image.");
+ if(file.size>5*1024*1024)throw new Error("Photo is too large. Maximum size is 5MB.");
+ const fd=new FormData();fd.append("file",file);fd.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);fd.append("folder","zedlink_products");
+ const response=await fetch("https://api.cloudinary.com/v1_1/"+CLOUDINARY_CLOUD_NAME+"/image/upload",{method:"POST",body:fd});
+ const result=await response.json();if(!response.ok||!result.secure_url)throw new Error(result.error?.message||"Photo upload failed.");return result.secure_url;
 }
-
 function loadListings(){
- db.collection("listings").orderBy("createdAt","desc").onSnapshot(snapshot=>{
-  currentListings=[];
-  snapshot.forEach(doc=>currentListings.push({id:doc.id,...doc.data()}));
-  renderListings();
-  renderSellerDashboard();
-  $("listingCount").textContent=currentListings.length+" listings";
-  $("loadingMessage").textContent=currentListings.length?"":"No listings yet. Be the first to post!";
- },error=>{
-  console.error(error);
-  $("loadingMessage").textContent="Could not load listings. Check Firestore rules.";
-  $("dashboardStatus").textContent="Could not load your products. Please check your connection.";
- });
+ db.collection("listings").orderBy("createdAt","desc").onSnapshot(snap=>{
+  currentListings=[];snap.forEach(doc=>currentListings.push({id:doc.id,...doc.data()}));renderListings();renderSellerDashboard();if(auth?.currentUser)renderFavorites();
+  $("listingCount").textContent=currentListings.length+" listings";$("loadingMessage").textContent=currentListings.length?"":"No listings yet. Be the first to post!";
+ },error=>{$("loadingMessage").textContent="Could not load listings. Check Firestore rules.";console.error(error);});
 }
-
 function renderListings(){
- const container=$("listings");
- container.replaceChildren();
-
- const term=$("search").value.toLowerCase().trim();
- const province=$("province").value;
-
- const filtered=currentListings.filter(item=>{
-  const searchable=[item.name,item.description,item.category,item.province].join(" ").toLowerCase();
-  return searchable.includes(term)&&(!province||item.province===province)&&
-   (activeCategory==="All"||item.category===activeCategory);
- });
-
- filtered.forEach(item=>container.appendChild(createListingCard(item)));
-
- if(!filtered.length&&currentListings.length){
-  const empty=document.createElement("div");
-  empty.className="empty";
-  empty.textContent="No products match your search. Try another filter.";
-  container.appendChild(empty);
- }
+ const box=$("listings");box.replaceChildren();const term=$("search").value.toLowerCase().trim(),province=$("province").value;
+ const found=currentListings.filter(x=>[x.name,x.description,x.category,x.province].join(" ").toLowerCase().includes(term)&&(!province||x.province===province)&&(activeCategory==="All"||x.category===activeCategory));
+ found.forEach(x=>box.appendChild(createListingCard(x)));
+ if(!found.length&&currentListings.length){const e=document.createElement("div");e.className="empty";e.textContent="No products match your search.";box.appendChild(e);}
 }
-
-function isSafeImageUrl(value){
- if(!value)return false;
- try{return new URL(value).protocol==="https:";}
- catch(error){return false;}
-}
-
 function createListingCard(data){
- const card=document.createElement("article");
- card.className="item";
- card.tabIndex=0;
-
- const photo=document.createElement("div");
- photo.className="photo";
-
- if(isSafeImageUrl(data.imageUrl)){
-  const img=document.createElement("img");
-  img.src=data.imageUrl;
-  img.alt=data.name||"Product photo";
-  img.loading="lazy";
-  img.onerror=()=>{photo.textContent=categoryIcon(data.category);};
-  photo.appendChild(img);
- }else{
-  photo.textContent=categoryIcon(data.category);
- }
-
- const details=document.createElement("div");
- details.className="details";
-
- const title=document.createElement("h3");
- title.textContent=data.name||"Untitled listing";
-
- const price=document.createElement("div");
- price.className="price";
- price.textContent="K"+Number(data.price||0).toLocaleString("en-ZM");
-
- const location=document.createElement("div");
- location.className="location";
- location.textContent=(data.province||"Unknown")+" Province";
-
- details.append(title,price,location);
- card.append(photo,details);
-
- card.addEventListener("click",()=>openProductDetails(data));
- card.addEventListener("keydown",event=>{
-  if(event.key==="Enter"||event.key===" "){
-   event.preventDefault();
-   openProductDetails(data);
-  }
- });
- return card;
+ const card=document.createElement("article");card.className="item";card.tabIndex=0;
+ const photo=document.createElement("div");photo.className="photo";
+ if(isSafeImageUrl(data.imageUrl)){const img=document.createElement("img");img.src=data.imageUrl;img.alt=data.name||"Product photo";img.loading="lazy";img.onerror=()=>photo.textContent=categoryIcon(data.category);photo.appendChild(img);}else photo.textContent=categoryIcon(data.category);
+ const details=document.createElement("div");details.className="details";const title=document.createElement("h3");title.textContent=data.name||"Untitled listing";
+ const price=document.createElement("div");price.className="price";price.textContent=money(data.price);
+ const loc=document.createElement("div");loc.className="location";loc.textContent=(data.province||"Unknown")+" Province";details.append(title,price,loc);card.append(photo,details);
+ card.addEventListener("click",()=>openProductDetails(data));card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openProductDetails(data);}});return card;
 }
-
-function normalizeZambianPhone(phone){
- let digits=String(phone||"").replace(/\D/g,"");
- if(digits.startsWith("00"))digits=digits.slice(2);
- if(digits.startsWith("0")&&digits.length===10)digits="26"+digits;
- else if(digits.length===9)digits="260"+digits;
- return digits.startsWith("260")&&digits.length===12?digits:"";
-}
-
 function openProductDetails(data){
- $("modalName").textContent=data.name||"Product details";
- $("modalPrice").textContent="K"+Number(data.price||0).toLocaleString("en-ZM");
- $("modalCategory").textContent="Category: "+(data.category||"Other");
- $("modalProvince").textContent="Location: "+(data.province||"Not specified")+" Province";
+ selectedProduct=data;$("modalName").textContent=data.name||"Product details";$("modalPrice").textContent=money(data.price);
+ $("modalCategory").textContent="Category: "+(data.category||"Other");$("modalProvince").textContent="Location: "+(data.province||"Not specified")+" Province";
  $("modalDescription").textContent=data.description||"No description provided.";
- $("modalSeller").textContent="Seller: "+(data.sellerEmail||"Contact details not provided");
-
- const photo=$("modalPhoto");
- photo.replaceChildren();
-
- if(isSafeImageUrl(data.imageUrl)){
-  const img=document.createElement("img");
-  img.src=data.imageUrl;
-  img.alt=data.name||"Product photo";
-  photo.appendChild(img);
- }else{
-  photo.textContent=categoryIcon(data.category);
- }
-
- const phone=normalizeZambianPhone(data.sellerPhone);
- const whatsapp=$("whatsappSeller");
-
- if(phone){
-  const message="Hello, I saw your "+(data.name||"product")+" on ZedLink. Is it still available?";
-  whatsapp.href="https://wa.me/"+phone+"?text="+encodeURIComponent(message);
-  whatsapp.classList.remove("hidden");
- }else{
-  whatsapp.classList.add("hidden");
- }
-
- const emailLink=$("emailSeller");
- if(data.sellerEmail){
-  emailLink.href="mailto:"+data.sellerEmail+"?subject="+encodeURIComponent("Enquiry about "+data.name);
-  emailLink.classList.remove("hidden");
- }else{
-  emailLink.classList.add("hidden");
- }
-
+ $("modalSeller").textContent="Seller: "+(data.sellerName||data.sellerEmail||"ZedLink seller");
+ const photo=$("modalPhoto");photo.replaceChildren();if(isSafeImageUrl(data.imageUrl)){const img=document.createElement("img");img.src=data.imageUrl;img.alt=data.name||"Product photo";photo.appendChild(img);}else photo.textContent=categoryIcon(data.category);
+ const phone=normalizeZambianPhone(data.sellerPhone);const wa=$("whatsappSeller");
+ if(phone){wa.classList.remove("hidden");wa.onclick=()=>{const msg="Hello, I saw your "+(data.name||"product")+" on ZedLink. Is it still available?";window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg),"_blank","noopener");};}else{wa.classList.add("hidden");wa.onclick=null;}
+ const email=$("emailSeller");if(data.sellerEmail){email.classList.remove("hidden");email.onclick=()=>location.href="mailto:"+data.sellerEmail+"?subject="+encodeURIComponent("Enquiry about "+data.name);}else email.classList.add("hidden");
+ const mtn=String(data.sellerMtn||"").trim();$("modalPayment").textContent=mtn?"Direct MTN Mobile Money: "+mtn+". Contact the seller to confirm the amount and payment details before sending. ZedLink does not receive or verify this payment.":"Ask the seller directly for their preferred payment method.";
+ $("favoriteButton").textContent=favoriteIds.has(data.id)?"♥ Remove from Favourites":"♡ Save to Favourites";
  $("productModal").classList.add("open");
 }
-
+$("favoriteButton").addEventListener("click",toggleFavorite);
+async function toggleFavorite(){
+ const user=auth?.currentUser;if(!user){alert("Please sign in to save favourites.");return;}if(!selectedProduct)return;
+ const ref=db.collection("users").doc(user.uid).collection("favorites").doc(selectedProduct.id);
+ try{if(favoriteIds.has(selectedProduct.id)){await ref.delete();favoriteIds.delete(selectedProduct.id);}else{await ref.set({listingId:selectedProduct.id,createdAt:firebase.firestore.FieldValue.serverTimestamp()});favoriteIds.add(selectedProduct.id);} $("favoriteButton").textContent=favoriteIds.has(selectedProduct.id)?"♥ Remove from Favourites":"♡ Save to Favourites";await renderFavorites();}
+ catch(error){alert("Could not update favourites: "+error.message);}
+}
+async function loadFavorites(){
+ const user=auth?.currentUser;if(!user)return;try{const snap=await db.collection("users").doc(user.uid).collection("favorites").get();favoriteIds=new Set(snap.docs.map(d=>d.id));await renderFavorites();}catch(error){console.error(error);$("favoritesList").innerHTML='<div class="empty">Could not load favourites. Check Firestore rules.</div>';}
+}
+async function renderFavorites(){
+ const box=$("favoritesList");box.replaceChildren();if(!auth?.currentUser){box.innerHTML='<div class="empty">Sign in to see your favourites.</div>';return;}
+ const items=currentListings.filter(x=>favoriteIds.has(x.id));if(!items.length){box.innerHTML='<div class="empty">You have not saved any products yet.</div>';return;}items.forEach(x=>box.appendChild(createListingCard(x)));
+}
+$("viewSellerButton").addEventListener("click",()=>{if(selectedProduct)showSellerProfile(selectedProduct.sellerId,selectedProduct.sellerName,selectedProduct.sellerEmail);});
+async function showSellerProfile(uid,fallbackName,fallbackEmail){
+ if(!uid){alert("Seller profile is not available for this listing.");return;}
+ try{
+  const snap=await db.collection("sellerProfiles").doc(uid).get();const p=snap.exists?snap.data():{};
+  $("sellerModalName").textContent=p.displayName||fallbackName||"ZedLink Seller";
+  const info=$("sellerModalInfo");info.replaceChildren();
+  const lines=[["Name",p.displayName||fallbackName||"Not provided"],["Province",p.province||"Not provided"],["About",p.bio||"No introduction provided"],["WhatsApp",p.phone||"Not provided"],["MTN Mobile Money",p.mtnNumber||"Ask seller directly"]];
+  lines.forEach(([k,v])=>{const d=document.createElement("div");d.className="profile-line";const b=document.createElement("strong");b.textContent=k+": ";d.append(b,document.createTextNode(v));info.appendChild(d);});
+  const products=$("sellerProducts");products.replaceChildren();const mine=currentListings.filter(x=>x.sellerId===uid);mine.forEach(x=>products.appendChild(createListingCard(x)));
+  if(!mine.length)products.innerHTML='<div class="empty">This seller has no active listings.</div>';
+  $("productModal").classList.remove("open");$("sellerModal").classList.add("open");
+ }catch(error){alert("Could not load seller profile: "+error.message);}
+}
 $("closeModal").addEventListener("click",()=>$("productModal").classList.remove("open"));
-$("productModal").addEventListener("click",event=>{
- if(event.target===$("productModal"))$("productModal").classList.remove("open");
+$("closeSellerModal").addEventListener("click",()=>$("sellerModal").classList.remove("open"));
+$("productModal").addEventListener("click",e=>{if(e.target===$("productModal"))$("productModal").classList.remove("open");});
+$("sellerModal").addEventListener("click",e=>{if(e.target===$("sellerModal"))$("sellerModal").classList.remove("open");});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){$("productModal").classList.remove("open");$("sellerModal").classList.remove("open");}});
+
+$("reportListingButton").addEventListener("click",async()=>{
+ const user=auth?.currentUser;if(!user){alert("Please sign in before reporting a listing.");return;}if(!selectedProduct)return;
+ const reason=prompt("Why are you reporting this listing? (e.g. scam, misleading item, prohibited item)");if(!reason||!reason.trim())return;
+ try{await db.collection("reports").add({listingId:selectedProduct.id,listingName:selectedProduct.name||"",reportedBy:user.uid,reason:reason.trim().slice(0,500),status:"open",createdAt:firebase.firestore.FieldValue.serverTimestamp()});alert("Thank you. Your report has been sent to the ZedLink admin team.");}
+ catch(error){alert("Could not send report: "+error.message);}
 });
-document.addEventListener("keydown",event=>{
- if(event.key==="Escape")$("productModal").classList.remove("open");
-});
 
-// POST A PRODUCT
-$("postForm").addEventListener("submit",async event=>{
- event.preventDefault();
-
- if(!auth||!db)return setMessage("postMessage","Firebase is not connected.","error");
-
- const user=auth.currentUser;
- if(!user)return setMessage("postMessage","Please sign in before posting.","error");
-
- const name=$("productName").value.trim();
- const price=Number($("productPrice").value);
- const category=$("productCategory").value;
- const province=$("productProvince").value;
- const description=$("productDescription").value.trim();
- const sellerPhone=$("sellerPhone").value.trim();
- const imageFile=$("productImage").files[0];
-
- if(!name||!Number.isInteger(price)||price<=0||!category||!province){
-  return setMessage("postMessage","Complete the product name, price, category and province.","error");
- }
-
+$("postForm").addEventListener("submit",async e=>{
+ e.preventDefault();const user=auth?.currentUser;if(!user)return setMessage("postMessage","Please sign in before posting.","error");
+ const name=$("productName").value.trim(),price=Number($("productPrice").value),category=$("productCategory").value,province=$("productProvince").value,description=$("productDescription").value.trim();
+ const sellerPhone=$("sellerPhone").value.trim()||currentUserProfile.phone||"",sellerMtn=$("sellerMtn").value.trim()||currentUserProfile.mtnNumber||"",file=$("productImage").files[0];
+ if(!name||!Number.isInteger(price)||price<=0||!CATEGORIES.includes(category)||!PROVINCES.includes(province))return setMessage("postMessage","Complete the name, valid price, category and province.","error");
  $("submitButton").disabled=true;
-
  try{
-  let imageUrl="";
-  if(imageFile){
-   $("submitButton").textContent="Uploading photo...";
-   setMessage("postMessage","Uploading your product photo. Please wait...");
-   imageUrl=await uploadProductImage(imageFile);
-  }
-
+  let imageUrl="";if(file){$("submitButton").textContent="Uploading photo...";imageUrl=await uploadProductImage(file);}
   $("submitButton").textContent="Saving listing...";
-  setMessage("postMessage","Saving your product listing...");
-
-  await db.collection("listings").add({
-   name,price,category,province,description,sellerPhone,
-   imageUrl:imageUrl||"",
-   sellerId:user.uid,
-   sellerEmail:user.email||"",
-   createdAt:firebase.firestore.FieldValue.serverTimestamp()
-  });
-
-  $("postForm").reset();
-  setMessage("postMessage","Your listing and photo have been saved successfully!","success");
-  window.scrollTo({top:$("sellerDashboard").offsetTop,behavior:"smooth"});
-
- }catch(error){
-  console.error("Could not post listing:",error);
-  setMessage("postMessage","Could not post listing: "+error.message,"error");
- }finally{
-  $("submitButton").disabled=false;
-  $("submitButton").textContent="Add Listing";
- }
+  await db.collection("listings").add({name,price,category,province,description,sellerPhone,sellerMtn,imageUrl,sellerId:user.uid,sellerName:currentUserProfile.displayName||"ZedLink Seller",createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+  $("postForm").reset();setMessage("postMessage","Your listing has been published!","success");goTo("sellerDashboard");
+ }catch(error){console.error(error);setMessage("postMessage","Could not post listing: "+error.message,"error");}
+ finally{$("submitButton").disabled=false;$("submitButton").textContent="Add Listing";}
 });
 
-// SELLER DASHBOARD
 function renderSellerDashboard(){
- const container=$("myListings");
- container.replaceChildren();
-
- const user=auth&&auth.currentUser;
-
- if(!user){
-  $("dashboardStatus").textContent="Sign in to view and manage your products.";
-  $("dashboardCount").textContent="";
-  return;
- }
-
- const mine=currentListings.filter(item=>item.sellerId===user.uid);
-
- $("dashboardStatus").textContent="You are signed in. These are your product listings.";
- $("dashboardCount").textContent=mine.length+" of your products";
-
- if(!mine.length){
-  const empty=document.createElement("div");
-  empty.className="empty";
-  empty.textContent="You have not posted any products yet. Use the Post a Product form above to get started.";
-  container.appendChild(empty);
-  return;
- }
-
- mine.forEach(item=>{
-  const card=document.createElement("div");
-  card.className="dashboard-item";
-
-  const photo=document.createElement("div");
-  photo.className="dashboard-photo";
-
-  if(isSafeImageUrl(item.imageUrl)){
-   const img=document.createElement("img");
-   img.src=item.imageUrl;
-   img.alt=item.name||"Product photo";
-   img.loading="lazy";
-   img.onerror=()=>{photo.textContent=categoryIcon(item.category);};
-   photo.appendChild(img);
-  }else{
-   photo.textContent=categoryIcon(item.category);
-  }
-
-  const info=document.createElement("div");
-  info.className="dashboard-info";
-
-  const title=document.createElement("h3");
-  title.textContent=item.name||"Untitled listing";
-
-  const price=document.createElement("div");
-  price.className="price";
-  price.textContent="K"+Number(item.price||0).toLocaleString("en-ZM");
-
-  const location=document.createElement("div");
-  location.className="location";
-  location.textContent=(item.category||"Other")+" • "+(item.province||"Unknown");
-
-  const actions=document.createElement("div");
-  actions.className="dashboard-actions";
-
-  const editButton=document.createElement("button");
-  editButton.type="button";
-  editButton.className="light";
-  editButton.textContent="Edit";
-  editButton.addEventListener("click",()=>editListing(item));
-
-  const deleteButton=document.createElement("button");
-  deleteButton.type="button";
-  deleteButton.className="delete-button";
-  deleteButton.textContent="Delete";
-  deleteButton.addEventListener("click",()=>deleteListing(item));
-
-  actions.append(editButton,deleteButton);
-  info.append(title,price,location,actions);
-  card.append(photo,info);
-  container.appendChild(card);
- });
+ const box=$("myListings");box.replaceChildren();const user=auth?.currentUser;if(!user){$("dashboardStatus").textContent="Sign in to view and manage your products.";$("dashboardCount").textContent="";return;}
+ const mine=currentListings.filter(x=>x.sellerId===user.uid);$("dashboardStatus").textContent="You are signed in. These are your product listings.";$("dashboardCount").textContent=mine.length+" of your products";
+ if(!mine.length){box.innerHTML='<div class="empty">You have not posted any products yet.</div>';return;}
+ mine.forEach(item=>box.appendChild(createDashboardItem(item,true)));
 }
-
-// EDIT A PRODUCT
+function createDashboardItem(item,owner){
+ const card=document.createElement("div");card.className="dashboard-item";const photo=document.createElement("div");photo.className="dashboard-photo";
+ if(isSafeImageUrl(item.imageUrl)){const img=document.createElement("img");img.src=item.imageUrl;img.alt=item.name||"Product";photo.appendChild(img);}else photo.textContent=categoryIcon(item.category);
+ const info=document.createElement("div");info.className="dashboard-info";const title=document.createElement("h3");title.textContent=item.name||"Untitled listing";const price=document.createElement("div");price.className="price";price.textContent=money(item.price);const loc=document.createElement("div");loc.className="location";loc.textContent=(item.category||"Other")+" • "+(item.province||"Unknown");info.append(title,price,loc);
+ const actions=document.createElement("div");actions.className="dashboard-actions";
+ const view=document.createElement("button");view.className="light";view.textContent="View";view.onclick=()=>openProductDetails(item);actions.appendChild(view);
+ if(owner){const edit=document.createElement("button");edit.className="light";edit.textContent="Edit";edit.onclick=()=>editListing(item);const del=document.createElement("button");del.className="danger";del.textContent="Delete";del.onclick=()=>deleteListing(item);actions.append(edit,del);}
+ card.append(photo,info);info.appendChild(actions);return card;
+}
 async function editListing(item){
- const user=auth&&auth.currentUser;
- if(!user||item.sellerId!==user.uid){
-  alert("You can only edit your own products.");
-  return;
- }
-
- const name=prompt("Enter product name:",item.name||"");
- if(name===null)return;
- if(!name.trim())return alert("Product name cannot be empty.");
-
- const priceText=prompt("Enter price in Kwacha:",String(item.price||""));
- if(priceText===null)return;
- const price=Number(priceText);
- if(!Number.isInteger(price)||price<=0){
-  return alert("Please enter a valid price greater than zero.");
- }
-
- const description=prompt("Enter product description:",item.description||"");
- if(description===null)return;
-
- const phone=prompt("Enter seller WhatsApp number:",item.sellerPhone||"");
- if(phone===null)return;
-
- const category=prompt("Enter category (Phones, Electronics, Fashion, Home, Furniture, Vehicles, Property, Agriculture or Other):",item.category||"Other");
- if(category===null)return;
-
- const allowedCategories=["Phones","Electronics","Fashion","Home","Furniture","Vehicles","Property","Agriculture","Other"];
- if(!allowedCategories.includes(category.trim())){
-  return alert("Please use one of the listed categories exactly.");
- }
-
- const province=prompt("Enter province:",item.province||"");
- if(province===null)return;
-
- const allowedProvinces=["Central","Copperbelt","Eastern","Luapula","Lusaka","Muchinga","Northern","North-Western","Southern","Western"];
- if(!allowedProvinces.includes(province.trim())){
-  return alert("Please enter a valid Zambian province.");
- }
-
- try{
-  await db.collection("listings").doc(item.id).update({
-   name:name.trim(),
-   price,
-   description:description.trim(),
-   sellerPhone:phone.trim(),
-   category:category.trim(),
-   province:province.trim()
-  });
-  alert("Your product has been updated successfully!");
- }catch(error){
-  console.error(error);
-  alert("Could not update product: "+error.message);
- }
+ if(auth?.currentUser?.uid!==item.sellerId&&!isAdmin())return alert("You can only edit your own products.");
+ const name=prompt("Product name:",item.name||"");if(name===null)return;if(!name.trim())return alert("Name cannot be empty.");
+ const price=Number(prompt("Price in Kwacha:",String(item.price||"")));if(!Number.isInteger(price)||price<=0)return alert("Enter a valid positive whole-number price.");
+ const description=prompt("Description:",item.description||"");if(description===null)return;
+ const phone=prompt("WhatsApp number:",item.sellerPhone||"");if(phone===null)return;
+ const mtn=prompt("MTN Mobile Money number:",item.sellerMtn||"");if(mtn===null)return;
+ const category=prompt("Category ("+CATEGORIES.join(", ")+"):",item.category||"Other");if(category===null||!CATEGORIES.includes(category.trim()))return alert("Choose a valid category.");
+ const province=prompt("Province:",item.province||"");if(province===null||!PROVINCES.includes(province.trim()))return alert("Choose a valid province.");
+ try{await db.collection("listings").doc(item.id).update({name:name.trim(),price,description:description.trim(),sellerPhone:phone.trim(),sellerMtn:mtn.trim(),category:category.trim(),province:province.trim()});alert("Product updated.");}
+ catch(error){alert("Could not update: "+error.message);}
 }
-
-// DELETE A PRODUCT
 async function deleteListing(item){
- const user=auth&&auth.currentUser;
- if(!user||item.sellerId!==user.uid){
-  alert("You can only delete your own products.");
-  return;
- }
-
- const confirmed=confirm("Are you sure you want to delete \""+(item.name||"this product")+"\"? This cannot be undone.");
- if(!confirmed)return;
-
- try{
-  await db.collection("listings").doc(item.id).delete();
-  alert("Your product has been deleted.");
- }catch(error){
-  console.error(error);
-  alert("Could not delete product: "+error.message);
- }
+ if(auth?.currentUser?.uid!==item.sellerId&&!isAdmin())return alert("You cannot delete this listing.");
+ if(!confirm('Delete "'+(item.name||"this product")+'"? This cannot be undone.'))return;
+ try{await db.collection("listings").doc(item.id).delete();alert("Listing deleted.");}
+ catch(error){alert("Could not delete: "+error.message);}
 }
 
-$("searchButton").addEventListener("click",renderListings);
-$("search").addEventListener("input",renderListings);
-$("province").addEventListener("change",renderListings);
+async function loadAdminDashboard(){
+ if(!isAdmin())return;
+ try{
+  const [usersSnap,reportsSnap,listingsSnap]=await Promise.all([db.collection("users").limit(100).get(),db.collection("reports").where("status","==","open").limit(100).get(),db.collection("listings").limit(100).get()]);
+  $("adminUsers").textContent=usersSnap.size;$("adminReports").textContent=reportsSnap.size;$("adminListings").textContent=listingsSnap.size;
+  const userBox=$("adminUsersList");userBox.replaceChildren();
+  usersSnap.forEach(doc=>{const p=doc.data(),d=document.createElement("div");d.className="dashboard-item";const info=document.createElement("div");info.className="dashboard-info";const title=document.createElement("h3");title.textContent=p.displayName||p.email||"Unnamed user";const sub=document.createElement("div");sub.className="location";sub.textContent=(p.email||"No email")+" • "+(p.province||"Province not set")+" • UID "+doc.id;info.append(title,sub);d.append(info);userBox.append(d);});
+  const reportBox=$("adminReportsList");reportBox.replaceChildren();reportsSnap.forEach(doc=>{const r=doc.data(),d=document.createElement("div");d.className="dashboard-item";const info=document.createElement("div");info.className="dashboard-info";const title=document.createElement("h3");title.textContent=r.listingName||r.listingId;const sub=document.createElement("p");sub.textContent="Reason: "+r.reason+" | Report ID: "+doc.id;const actions=document.createElement("div");actions.className="dashboard-actions";const done=document.createElement("button");done.className="light";done.textContent="Mark reviewed";done.onclick=async()=>{try{await db.collection("reports").doc(doc.id).update({status:"reviewed",reviewedAt:firebase.firestore.FieldValue.serverTimestamp(),reviewedBy:auth.currentUser.uid});loadAdminDashboard();}catch(e){alert(e.message);}};const remove=document.createElement("button");remove.className="danger";remove.textContent="Delete reported listing";remove.onclick=async()=>{if(!confirm("Delete the reported listing?"))return;try{await db.collection("listings").doc(r.listingId).delete();await db.collection("reports").doc(doc.id).update({status:"reviewed",reviewedAt:firebase.firestore.FieldValue.serverTimestamp()});loadAdminDashboard();}catch(e){alert(e.message);}};actions.append(done,remove);info.append(title,sub,actions);d.append(info);reportBox.append(d);});
+  if(!reportsSnap.size)reportBox.innerHTML='<div class="empty">No open reports.</div>';
+  const listingBox=$("adminListingsList");listingBox.replaceChildren();listingsSnap.forEach(doc=>listingBox.appendChild(createDashboardItem({id:doc.id,...doc.data()},false)));
+  setMessage("adminMessage","Admin data loaded. User accounts themselves cannot be deleted from this browser dashboard.","success");
+ }catch(error){console.error(error);setMessage("adminMessage","Admin access failed. Check the admin UID and Firestore rules: "+error.message,"error");}
+}
 
-document.querySelectorAll(".categories button").forEach(button=>{
- button.addEventListener("click",()=>{
-  activeCategory=button.dataset.category;
-  document.querySelectorAll(".categories button").forEach(btn=>{
-   btn.classList.toggle("active",btn===button);
-  });
-  renderListings();
- });
-});
-
+$("searchButton").addEventListener("click",renderListings);$("search").addEventListener("input",renderListings);$("province").addEventListener("change",renderListings);
+document.querySelectorAll(".categories button").forEach(btn=>btn.addEventListener("click",()=>{activeCategory=btn.dataset.category;document.querySelectorAll(".categories button").forEach(b=>b.classList.toggle("active",b===btn));renderListings();}));
 initializeFirebase();
 </script>
-</body>
-</html>
+</body></html>
