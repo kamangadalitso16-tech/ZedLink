@@ -156,7 +156,7 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
 
 /* IMPORTANT: Replace this value with YOUR Firebase Authentication UID before enabling admin tools.
    Firestore rules must contain the same UID. Never use an email address as the only admin security check. */
-const ADMIN_UID = "REPLACE_WITH_YOUR_FIREBASE_AUTH_UID";
+const ADMIN_UID = "CJN0ZRzlSkbAKfa3BAwIPMD2FOA2";
 
 const firebaseConfig = {
  apiKey:"AIzaSyDR92dXWMcfi1yKfczTUvjr5i-hXp1Rvyw",
@@ -178,7 +178,7 @@ function categoryIcon(category){return ({Phones:"📱",Electronics:"💻",Fashio
 function money(value){return "K"+Number(value||0).toLocaleString("en-ZM");}
 function isSafeImageUrl(value){try{return new URL(value).protocol==="https:";}catch(e){return false;}}
 function normalizeZambianPhone(phone){let d=String(phone||"").replace(/\D/g,"");if(d.startsWith("00"))d=d.slice(2);if(d.startsWith("0")&&d.length===10)d="26"+d;else if(d.length===9)d="260"+d;return d.startsWith("260")&&d.length===12?d:"";}
-function isAdmin(){return !!auth?.currentUser&&ADMIN_UID!=="REPLACE_WITH_YOUR_FIREBASE_AUTH_UID"&&auth.currentUser.uid===ADMIN_UID;}
+function isAdmin(){return !!auth?.currentUser&&auth.currentUser.uid===ADMIN_UID;}
 function friendlyAuthError(error){const m={"auth/email-already-in-use":"That email already has an account. Please sign in.","auth/invalid-email":"Please enter a valid email address.","auth/weak-password":"Choose a stronger password.","auth/user-not-found":"No account found for that email.","auth/wrong-password":"Incorrect password.","auth/invalid-credential":"Email or password is incorrect.","auth/too-many-requests":"Too many attempts. Please wait.","auth/network-request-failed":"Check your internet connection."};return m[error.code]||error.message||"Something went wrong.";}
 
 function initializeFirebase(){
