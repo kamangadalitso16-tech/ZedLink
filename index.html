@@ -37,7 +37,7 @@ a{color:var(--green)}.form-grid{display:grid;gap:10px}.search{display:grid;grid-
 .inline-row{display:flex;gap:8px;align-items:center}.inline-row>*{flex:1;min-width:0}.profile-line{padding:10px 0;border-bottom:1px solid var(--line)}
 footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
 @media(max-width:600px){.search{grid-template-columns:1fr}.search button{width:100%}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.photo{height:105px}.auth-actions{flex-direction:column}.dashboard-item{grid-template-columns:75px 1fr}.dashboard-photo{width:75px;height:75px}nav button{flex:1}}
-</style>
+.verified-badge{display:inline-block;background:#e6f4ea;color:#137333;border:1px solid #a8d5b5;border-radius:20px;padding:5px 10px;font-size:13px;font-weight:700;margin:6px 0}\n</style>
 </head>
 <body>
 <header><div class="wrap">
@@ -116,7 +116,7 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
 <section class="hero hidden" id="adminSection">
  <h2>Administrator Dashboard</h2><p>Review marketplace activity and reported listings. Admin access is controlled by the UID in the website and Firestore rules.</p>
  <div class="panel-grid"><div class="stat"><strong id="adminUsers">—</strong>Registered profiles</div><div class="stat"><strong id="adminListings">—</strong>Product listings</div><div class="stat"><strong id="adminReports">—</strong>Open reports</div></div>
- <h3>Recent user profiles</h3><div id="adminUsersList" class="dashboard-list"></div>
+ <h3>Seller verification</h3><p>Review a seller profile and contact details before granting the ZedLink Verified badge. This is a ZedLink review, not government identity verification.</p><div id="adminUsersList" class="dashboard-list"></div>
  <h3>Reported listings</h3><div id="adminReportsList" class="dashboard-list"></div>
  <h3>All listings</h3><div id="adminListingsList" class="dashboard-list"></div>
  <p id="adminMessage" class="status"></p>
@@ -272,7 +272,7 @@ function createListingCard(data){
  if(isSafeImageUrl(data.imageUrl)){const img=document.createElement("img");img.src=data.imageUrl;img.alt=data.name||"Product photo";img.loading="lazy";img.onerror=()=>photo.textContent=categoryIcon(data.category);photo.appendChild(img);}else photo.textContent=categoryIcon(data.category);
  const details=document.createElement("div");details.className="details";const title=document.createElement("h3");title.textContent=data.name||"Untitled listing";
  const price=document.createElement("div");price.className="price";price.textContent=money(data.price);
- const loc=document.createElement("div");loc.className="location";loc.textContent=(data.province||"Unknown")+" Province";details.append(title,price,loc);card.append(photo,details);
+ const loc=document.createElement("div");loc.className="location";loc.textContent=(data.province||"Unknown")+" Province";details.append(title,price,loc);card.append(photo,details);if(data.sellerId){db.collection("sellerProfiles").doc(data.sellerId).get().then(s=>{if(s.exists&&s.data().verified){const badge=document.createElement("span");badge.className="verified-badge";badge.textContent="✓ ZedLink Verified Seller";details.appendChild(badge);}}).catch(()=>{});}
  card.addEventListener("click",()=>openProductDetails(data));card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openProductDetails(data);}});return card;
 }
 function openProductDetails(data){
@@ -309,6 +309,7 @@ async function showSellerProfile(uid,fallbackName,fallbackEmail){
   const snap=await db.collection("sellerProfiles").doc(uid).get();const p=snap.exists?snap.data():{};
   $("sellerModalName").textContent=p.displayName||fallbackName||"ZedLink Seller";
   const info=$("sellerModalInfo");info.replaceChildren();
+  if(p.verified){const badge=document.createElement("div");badge.className="verified-badge";badge.textContent="✓ ZedLink Verified Seller";info.appendChild(badge);}
   const lines=[["Name",p.displayName||fallbackName||"Not provided"],["Province",p.province||"Not provided"],["About",p.bio||"No introduction provided"],["WhatsApp",p.phone||"Not provided"],["MTN Mobile Money",p.mtnNumber||"Ask seller directly"]];
   lines.forEach(([k,v])=>{const d=document.createElement("div");d.className="profile-line";const b=document.createElement("strong");b.textContent=k+": ";d.append(b,document.createTextNode(v));info.appendChild(d);});
   const products=$("sellerProducts");products.replaceChildren();const mine=currentListings.filter(x=>x.sellerId===uid);mine.forEach(x=>products.appendChild(createListingCard(x)));
@@ -384,7 +385,9 @@ async function loadAdminDashboard(){
   const [usersSnap,reportsSnap,listingsSnap]=await Promise.all([db.collection("users").limit(100).get(),db.collection("reports").where("status","==","open").limit(100).get(),db.collection("listings").limit(100).get()]);
   $("adminUsers").textContent=usersSnap.size;$("adminReports").textContent=reportsSnap.size;$("adminListings").textContent=listingsSnap.size;
   const userBox=$("adminUsersList");userBox.replaceChildren();
-  usersSnap.forEach(doc=>{const p=doc.data(),d=document.createElement("div");d.className="dashboard-item";const info=document.createElement("div");info.className="dashboard-info";const title=document.createElement("h3");title.textContent=p.displayName||p.email||"Unnamed user";const sub=document.createElement("div");sub.className="location";sub.textContent=(p.email||"No email")+" • "+(p.province||"Province not set")+" • UID "+doc.id;info.append(title,sub);d.append(info);userBox.append(d);});
+  const profilesSnap=await db.collection("sellerProfiles").limit(100).get();
+  profilesSnap.forEach(doc=>{const p=doc.data(),d=document.createElement("div");d.className="dashboard-item";const info=document.createElement("div");info.className="dashboard-info";const title=document.createElement("h3");title.textContent=p.displayName||"Unnamed seller";const sub=document.createElement("div");sub.className="location";sub.textContent=(p.phone||"No WhatsApp number")+" • "+(p.province||"Province not set")+" • "+(p.verified?"Verified":"Not verified");const actions=document.createElement("div");actions.className="dashboard-actions";const verify=document.createElement("button");verify.className=p.verified?"danger":"green";verify.textContent=p.verified?"Remove verification":"Mark as verified";verify.onclick=async()=>{const ok=confirm(p.verified?"Remove this seller's ZedLink verification?":"Have you reviewed this seller's profile and contact details and are satisfied? Only approve sellers you have checked.");if(!ok)return;try{await db.collection("sellerProfiles").doc(doc.id).update({verified:!p.verified,verifiedAt:firebase.firestore.FieldValue.serverTimestamp(),verifiedBy:auth.currentUser.uid});alert(p.verified?"Verification removed.":"Seller verified.");loadAdminDashboard();renderListings();}catch(e){alert("Could not update verification: "+e.message);}};actions.appendChild(verify);info.append(title,sub,actions);d.append(info);userBox.append(d);});
+  if(!profilesSnap.size)userBox.innerHTML='<div class="empty">No seller profiles found.</div>';
   const reportBox=$("adminReportsList");reportBox.replaceChildren();reportsSnap.forEach(doc=>{const r=doc.data(),d=document.createElement("div");d.className="dashboard-item";const info=document.createElement("div");info.className="dashboard-info";const title=document.createElement("h3");title.textContent=r.listingName||r.listingId;const sub=document.createElement("p");sub.textContent="Reason: "+r.reason+" | Report ID: "+doc.id;const actions=document.createElement("div");actions.className="dashboard-actions";const done=document.createElement("button");done.className="light";done.textContent="Mark reviewed";done.onclick=async()=>{try{await db.collection("reports").doc(doc.id).update({status:"reviewed",reviewedAt:firebase.firestore.FieldValue.serverTimestamp(),reviewedBy:auth.currentUser.uid});loadAdminDashboard();}catch(e){alert(e.message);}};const remove=document.createElement("button");remove.className="danger";remove.textContent="Delete reported listing";remove.onclick=async()=>{if(!confirm("Delete the reported listing?"))return;try{await db.collection("listings").doc(r.listingId).delete();await db.collection("reports").doc(doc.id).update({status:"reviewed",reviewedAt:firebase.firestore.FieldValue.serverTimestamp()});loadAdminDashboard();}catch(e){alert(e.message);}};actions.append(done,remove);info.append(title,sub,actions);d.append(info);reportBox.append(d);});
   if(!reportsSnap.size)reportBox.innerHTML='<div class="empty">No open reports.</div>';
   const listingBox=$("adminListingsList");listingBox.replaceChildren();listingsSnap.forEach(doc=>listingBox.appendChild(createDashboardItem({id:doc.id,...doc.data()},true)));
