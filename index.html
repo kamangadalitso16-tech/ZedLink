@@ -218,7 +218,15 @@ $("authForm").addEventListener("submit",async e=>{
  e.preventDefault();if(!auth)return setMessage("authMessage","Firebase is not connected.","error");
  $("authButton").disabled=true;$("authButton").textContent=isRegistering?"Creating account...":"Signing in...";
  try{
-  if(isRegistering){const result=await auth.createUserWithEmailAndPassword($("email").value.trim(),$("password").value);await db.collection("users").doc(result.user.uid).set({email:result.user.email||"",createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});setMessage("authMessage","Account created! Complete your profile below.","success");}
+  if(isRegistering){
+   const result=await auth.createUserWithEmailAndPassword($("email").value.trim(),$("password").value);
+   const now=firebase.firestore.FieldValue.serverTimestamp();
+   const batch=db.batch();
+   batch.set(db.collection("users").doc(result.user.uid),{email:result.user.email||"",createdAt:now,updatedAt:now},{merge:true});
+   batch.set(db.collection("sellerProfiles").doc(result.user.uid),{displayName:"",phone:"",mtnNumber:"",province:"",bio:"",createdAt:now,updatedAt:now},{merge:true});
+   await batch.commit();
+   setMessage("authMessage","Account created! Your profile record is ready. You can add your details below.","success");
+  }
   else{await auth.signInWithEmailAndPassword($("email").value.trim(),$("password").value);setMessage("authMessage","Welcome back!","success");}
   $("authForm").reset();isRegistering=false;$("registerButton").textContent="Create New Account";$("authButton").textContent="Sign In";
  }catch(error){setMessage("authMessage",friendlyAuthError(error),"error");}
