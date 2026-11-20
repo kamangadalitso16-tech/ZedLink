@@ -58,9 +58,10 @@
         <div class="field"><label for="email">Email address</label><input id="email" type="email" required autocomplete="email"></div>
         <div class="field"><label for="password">Password</label><input id="password" type="password" required minlength="6" autocomplete="current-password"></div>
       </div>
-      <div class="actions"><button class="btn" id="authButton" type="submit">Sign in</button><button class="btn secondary" id="registerButton" type="button">Create account</button><button class="btn secondary" id="resetButton" type="button">Reset password</button><button class="btn danger hidden" id="logoutButton" type="button">Sign out</button></div>
+      <div class="actions"><button class="btn" id="authButton" type="submit">Sign in</button><button class="btn secondary" id="registerButton" type="button">Create account</button><button class="btn secondary" id="resetButton" type="button">Reset password</button></div>
       <p id="authMessage" class="status" aria-live="polite"></p>
     </form>
+    <div id="signedInActions" class="actions hidden"><button class="btn danger" id="logoutButton" type="button">Sign out</button></div>
   </section>
 
   <section class="panel" id="profileSection">
@@ -260,11 +261,10 @@ async function loadProfile(user){
 function updateAuthUI(user){
   currentUser=user||null;
   text("accountStatus",user?"Signed in as "+user.email:"You are not signed in.");
-  $("logoutButton").classList.toggle("hidden",!user);
-  $("authButton").classList.toggle("hidden",!!user);
-  $("registerButton").classList.toggle("hidden",!!user);
-  $("resetButton").classList.toggle("hidden",!!user);
+  // Keep Sign out outside the sign-in form so hiding the form never hides logout.
   $("authForm").classList.toggle("hidden",!!user);
+  $("signedInActions").classList.toggle("hidden",!user);
+  $("authButton").textContent=isRegisterMode?"Create account":"Sign in";
   $("adminNav").classList.toggle("hidden",!isAdmin());
   $("adminSection").classList.toggle("hidden",!isAdmin());
   if(!user){
